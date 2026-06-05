@@ -1,0 +1,53 @@
+{
+  "name": "@eshop/rich-text-editor",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./extensions/image-upload": {
+      "types": "./src/extensions/image-upload/index.ts",
+      "default": "./src/extensions/image-upload/index.ts"
+    },
+    "./extensions/lightbox": {
+      "types": "./src/extensions/lightbox/index.ts",
+      "default": "./src/extensions/lightbox/index.ts"
+    },
+    "./styles": {
+      "types": "./src/styles/index.d.ts",
+      "default": "./src/styles/editor.css"
+    }
+  },
+  "scripts": {
+    "lint": "oxlint ."
+  },
+  "dependencies": {
+    "@tiptap/core": "^2.0.0",
+    "@tiptap/extension-color": "^2.27.2",
+    "@tiptap/extension-highlight": "^2.27.2",
+    "@tiptap/extension-image": "^2.0.0",
+    "@tiptap/extension-link": "^2.0.0",
+    "@tiptap/extension-placeholder": "^2.27.2",
+    "@tiptap/extension-table": "^2.0.0",
+    "@tiptap/extension-table-cell": "^2.0.0",
+    "@tiptap/extension-table-header": "^2.0.0",
+    "@tiptap/extension-table-row": "^2.0.0",
+    "@tiptap/extension-text-align": "^2.27.2",
+    "@tiptap/extension-text-style": "^2.27.2",
+    "@tiptap/extension-underline": "^2.0.0",
+    "@tiptap/pm": "^2.0.0",
+    "@tiptap/starter-kit": "^2.0.0",
+    "@tiptap/vue-3": "^2.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "vite": "^8.0.11"
+  }
+}

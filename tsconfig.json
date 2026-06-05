@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist",
+    "types": ["vite/client"]
+  },
+  "include": ["src"]
+}
