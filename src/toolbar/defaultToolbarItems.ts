@@ -17,15 +17,32 @@ import {
   LinkIcon,
   ImageIcon,
   TableIcon,
+  YoutubeIcon,
   AlignLeftIcon,
   AlignCenterIcon,
   AlignRightIcon,
   AlignJustifyIcon,
   HighlighterIcon,
   TextColorIcon,
+  CodeIcon,
 } from '../icons'
+import type { ToolbarButton } from './types'
 
 const sep: ToolbarItem = { type: 'separator' }
+
+/** 可選的「匯出 HTML」toolbar 按鈕：複製 getHTML() 結果到剪貼簿。 */
+export const exportHtmlToolbarItem: ToolbarButton = {
+  name: 'exportHtml',
+  icon: CodeIcon,
+  label: '匯出 HTML（複製）',
+  command: (e: Editor) => {
+    const html = e.getHTML()
+    void navigator.clipboard?.writeText(html).then(
+      () => window.alert('已複製 HTML 到剪貼簿'),
+      () => window.prompt('複製以下 HTML：', html),
+    )
+  },
+}
 
 export const defaultToolbarItems: ToolbarItem[] = [
   {
@@ -63,6 +80,49 @@ export const defaultToolbarItems: ToolbarItem[] = [
     label: '標題 3',
     isActive: (e: Editor) => e.isActive('heading', { level: 3 }),
     command: (e: Editor) => e.chain().focus().toggleHeading({ level: 3 }).run(),
+  },
+  sep,
+  {
+    type: 'dropdown',
+    name: 'fontFamily',
+    label: '字型',
+    placeholder: '字型',
+    width: 96,
+    options: [
+      { label: 'Sans Serif', value: '"Noto Sans TC", system-ui, sans-serif' },
+      { label: '微軟正黑體', value: '"Microsoft JhengHei", sans-serif' },
+      { label: 'Arial', value: 'Arial, sans-serif' },
+      { label: 'Georgia', value: 'Georgia, serif' },
+      { label: 'Times New Roman', value: '"Times New Roman", serif' },
+      { label: 'Courier', value: '"Courier New", monospace' },
+    ],
+    getValue: (e: Editor) => (e.getAttributes('textStyle').fontFamily as string) ?? '',
+    command: (e: Editor, value: string) =>
+      value
+        ? e.chain().focus().setFontFamily(value).run()
+        : e.chain().focus().unsetFontFamily().run(),
+  },
+  {
+    type: 'dropdown',
+    name: 'fontSize',
+    label: '字級',
+    placeholder: '字級',
+    width: 72,
+    options: [
+      { label: '12', value: '12px' },
+      { label: '14', value: '14px' },
+      { label: '16', value: '16px' },
+      { label: '18', value: '18px' },
+      { label: '20', value: '20px' },
+      { label: '24', value: '24px' },
+      { label: '30', value: '30px' },
+      { label: '36', value: '36px' },
+    ],
+    getValue: (e: Editor) => (e.getAttributes('textStyle').fontSize as string) ?? '',
+    command: (e: Editor, value: string) =>
+      value
+        ? e.chain().focus().setFontSize(value).run()
+        : e.chain().focus().unsetFontSize().run(),
   },
   sep,
   {
@@ -204,6 +264,15 @@ export const defaultToolbarItems: ToolbarItem[] = [
     label: '插入表格',
     command: (e: Editor) =>
       e.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
+  },
+  {
+    name: 'youtube',
+    icon: YoutubeIcon,
+    label: '插入 YouTube 影片',
+    command: (e: Editor) => {
+      const url = window.prompt('輸入 YouTube 影片網址')
+      if (url) e.chain().focus().setYoutubeVideo({ src: url }).run()
+    },
   },
   sep,
   {

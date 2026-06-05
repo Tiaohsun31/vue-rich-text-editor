@@ -133,6 +133,39 @@ export const UnlinkIcon = svgIcon(
     '<line x1="4" y1="4" x2="20" y2="20"/>',
 )
 
+export const UploadIcon = svgIcon(
+  '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>' +
+    '<polyline points="17 8 12 3 7 8"/>' +
+    '<line x1="12" y1="3" x2="12" y2="15"/>',
+)
+
+export const MediaLibraryIcon = svgIcon(
+  '<rect x="3" y="3" width="14" height="14" rx="2"/>' +
+    '<circle cx="8" cy="8" r="1.4"/>' +
+    '<path d="M17 13l-3-3-5 5"/>' +
+    '<path d="M21 7v12a2 2 0 0 1-2 2H7"/>',
+)
+
+export const GridIcon = svgIcon(
+  '<rect x="3" y="3" width="7" height="7" rx="1"/>' +
+    '<rect x="14" y="3" width="7" height="7" rx="1"/>' +
+    '<rect x="3" y="14" width="7" height="7" rx="1"/>' +
+    '<rect x="14" y="14" width="7" height="7" rx="1"/>',
+)
+
+export const CollapseIcon = svgIcon(
+  '<rect x="3" y="4" width="18" height="6" rx="1"/>' +
+    '<polyline points="8 16 12 20 16 16"/>' +
+    '<line x1="12" y1="20" x2="12" y2="13"/>',
+)
+
+export const CodeIcon = svgIcon('<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>')
+
+export const YoutubeIcon = svgIcon(
+  '<rect x="2" y="5" width="20" height="14" rx="3"/>' +
+    '<polygon points="10 9 15 12 10 15 10 9" fill="currentColor" stroke="none"/>',
+)
+
 export const AlignLeftIcon = svgIcon(
   '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/>',
 )

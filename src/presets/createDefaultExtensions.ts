@@ -1,6 +1,5 @@
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
-import Image from '@tiptap/extension-image'
 import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
@@ -11,8 +10,12 @@ import TextAlign from '@tiptap/extension-text-align'
 import TextStyle from '@tiptap/extension-text-style'
 import Color from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
+import FontFamily from '@tiptap/extension-font-family'
+import Youtube from '@tiptap/extension-youtube'
 import { Extension } from '@tiptap/core'
 import { TextSelection } from '@tiptap/pm/state'
+import { FontSize } from './fontSize'
+import { ResizableImage } from '../nodes/ResizableImage'
 
 export interface DefaultExtensionsOptions {
   placeholder?: string
@@ -57,7 +60,7 @@ export function createDefaultExtensions(options: DefaultExtensionsOptions = {}) 
       openOnClick: false,
       autolink: true,
     }),
-    Image.configure({
+    ResizableImage.configure({
       inline: false,
       allowBase64: false,
     }),
@@ -67,11 +70,18 @@ export function createDefaultExtensions(options: DefaultExtensionsOptions = {}) 
     TableRow,
     TableCell,
     TableHeader,
+    Youtube.configure({
+      controls: true,
+      nocookie: true,
+      HTMLAttributes: { class: 'rte-youtube' },
+    }),
     TextAlign.configure({
       types: ['heading', 'paragraph'],
     }),
     TextStyle,
     Color,
+    FontFamily,
+    FontSize,
     Highlight.configure({ multicolor: true }),
     Placeholder.configure({
       placeholder: options.placeholder ?? '開始輸入內容…',

@@ -1,12 +1,35 @@
 <script setup lang="ts">
 import { BubbleMenu } from '@tiptap/vue-3'
 import type { Editor } from '@tiptap/core'
-import { PencilIcon, TrashIcon } from '../icons'
+import {
+  PencilIcon,
+  TrashIcon,
+  AlignLeftIcon,
+  AlignCenterIcon,
+  AlignRightIcon,
+  LightboxIcon,
+} from '../icons'
 
 const props = defineProps<{ editor: Editor }>()
 
 function shouldShow() {
   return props.editor.isActive('image')
+}
+
+function currentAlign(): string {
+  return (props.editor.getAttributes('image').align as string) ?? 'left'
+}
+
+function isLightbox(): boolean {
+  return props.editor.getAttributes('image').lightbox === true
+}
+
+function setAlign(align: 'left' | 'center' | 'right') {
+  props.editor.chain().focus().updateAttributes('image', { align }).run()
+}
+
+function toggleLightbox() {
+  props.editor.chain().focus().updateAttributes('image', { lightbox: !isLightbox() }).run()
 }
 
 function editAlt() {
@@ -29,12 +52,45 @@ function editAlt() {
       <button
         type="button"
         class="rte-bubble-btn"
-        title="編輯替代文字"
-        @mousedown.prevent="editAlt"
+        :class="{ 'is-active': currentAlign() === 'left' }"
+        title="靠左"
+        @mousedown.prevent="setAlign('left')"
       >
+        <AlignLeftIcon />
+      </button>
+      <button
+        type="button"
+        class="rte-bubble-btn"
+        :class="{ 'is-active': currentAlign() === 'center' }"
+        title="置中"
+        @mousedown.prevent="setAlign('center')"
+      >
+        <AlignCenterIcon />
+      </button>
+      <button
+        type="button"
+        class="rte-bubble-btn"
+        :class="{ 'is-active': currentAlign() === 'right' }"
+        title="靠右"
+        @mousedown.prevent="setAlign('right')"
+      >
+        <AlignRightIcon />
+      </button>
+
+      <div class="rte-bubble-separator" />
+
+      <button
+        type="button"
+        class="rte-bubble-btn"
+        :class="{ 'is-active': isLightbox() }"
+        title="點圖開燈箱"
+        @mousedown.prevent="toggleLightbox"
+      >
+        <LightboxIcon />
+      </button>
+      <button type="button" class="rte-bubble-btn" title="編輯替代文字" @mousedown.prevent="editAlt">
         <PencilIcon />
       </button>
-      <div class="rte-bubble-separator" />
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--danger"

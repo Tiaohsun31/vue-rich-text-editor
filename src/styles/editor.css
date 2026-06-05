@@ -50,6 +50,29 @@
   cursor: not-allowed;
 }
 
+/* 統一所有 toolbar icon 尺寸，不論來源 */
+.rte-toolbar-btn svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.rte-toolbar-select {
+  height: 30px;
+  padding: 0 4px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #fff;
+  color: #374151;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.rte-toolbar-select:hover {
+  background: #f3f4f6;
+}
+
 .rte-toolbar-separator {
   width: 1px;
   height: 20px;
@@ -194,6 +217,82 @@
   max-width: 100%;
   height: auto;
   border-radius: 4px;
+}
+
+/* ===== YouTube 嵌入 ===== */
+.rte-content .ProseMirror div[data-youtube-video] {
+  max-width: 100%;
+  margin: 0.5em 0;
+}
+
+.rte-content .ProseMirror div[data-youtube-video] iframe {
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* ===== Resizable Image NodeView ===== */
+/* 移除 ProseMirror 預設整塊選取框，改由 frame 自繪緊貼圖片 */
+.rte-content .ProseMirror .rte-image.ProseMirror-selectednode {
+  outline: none;
+}
+
+.rte-image__frame {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  vertical-align: bottom;
+}
+
+.rte-image__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.rte-image__frame--editable.is-selected,
+.rte-image__frame--editable:hover {
+  outline: 2px solid #93c5fd;
+  outline-offset: 1px;
+}
+
+.rte-image__handle {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 12px;
+  height: 12px;
+  background: #2563eb;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.rte-image__frame--editable:hover .rte-image__handle,
+.rte-image__frame--editable.is-selected .rte-image__handle {
+  opacity: 1;
+}
+
+/* 唯讀預覽時，燈箱圖片可點放大 */
+.rte-image__img--lightbox {
+  cursor: zoom-in;
+}
+
+/* 編輯時標示此圖為燈箱 */
+.rte-image__badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px 4px;
+  background: rgba(31, 41, 55, 0.85);
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 /* ===== Table ===== */

@@ -15,4 +15,24 @@ export interface ToolbarSeparator {
   type: 'separator'
 }
 
-export type ToolbarItem = ToolbarButton | ToolbarSeparator
+export interface ToolbarDropdownOption {
+  label: string
+  value: string
+}
+
+export interface ToolbarDropdown {
+  type: 'dropdown'
+  name: string
+  label: string
+  /** 預設顯示文字（無選取時） */
+  placeholder?: string
+  options: ToolbarDropdownOption[]
+  /** 取得目前值（對應某個 option.value，回傳空字串代表未選） */
+  getValue: (editor: Editor) => string
+  /** 套用所選值（空字串代表清除） */
+  command: (editor: Editor, value: string) => void
+  /** 下拉寬度（px） */
+  width?: number
+}
+
+export type ToolbarItem = ToolbarButton | ToolbarSeparator | ToolbarDropdown

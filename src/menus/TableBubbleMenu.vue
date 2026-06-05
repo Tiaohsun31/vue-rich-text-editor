@@ -28,7 +28,7 @@ function shouldShow() {
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
         title="上方插入列"
-        @mousedown.prevent="editor.chain().focus().insertRowBefore().run()"
+        @mousedown.prevent="editor.chain().focus().addRowBefore().run()"
       >
         ↑列
       </button>
@@ -36,7 +36,7 @@ function shouldShow() {
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
         title="下方插入列"
-        @mousedown.prevent="editor.chain().focus().insertRowAfter().run()"
+        @mousedown.prevent="editor.chain().focus().addRowAfter().run()"
       >
         ↓列
       </button>
@@ -56,7 +56,7 @@ function shouldShow() {
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
         title="左側插入欄"
-        @mousedown.prevent="editor.chain().focus().insertColumnBefore().run()"
+        @mousedown.prevent="editor.chain().focus().addColumnBefore().run()"
       >
         ←欄
       </button>
@@ -64,7 +64,7 @@ function shouldShow() {
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
         title="右側插入欄"
-        @mousedown.prevent="editor.chain().focus().insertColumnAfter().run()"
+        @mousedown.prevent="editor.chain().focus().addColumnAfter().run()"
       >
         →欄
       </button>
