@@ -1,17 +1,16 @@
 import StarterKit from '@tiptap/starter-kit'
-import Link from '@tiptap/extension-link'
-import Table from '@tiptap/extension-table'
+import { Table } from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
-import Underline from '@tiptap/extension-underline'
-import Placeholder from '@tiptap/extension-placeholder'
+import { Placeholder } from '@tiptap/extensions'
 import TextAlign from '@tiptap/extension-text-align'
-import TextStyle from '@tiptap/extension-text-style'
+import { TextStyle } from '@tiptap/extension-text-style'
 import Color from '@tiptap/extension-color'
-import Highlight from '@tiptap/extension-highlight'
 import FontFamily from '@tiptap/extension-font-family'
+import Highlight from '@tiptap/extension-highlight'
 import Youtube from '@tiptap/extension-youtube'
+import { Details, DetailsSummary, DetailsContent } from '@tiptap/extension-details'
 import { Extension } from '@tiptap/core'
 import { TextSelection } from '@tiptap/pm/state'
 import { FontSize } from './fontSize'
@@ -53,12 +52,11 @@ const ExitBlock = Extension.create({
 export function createDefaultExtensions(options: DefaultExtensionsOptions = {}) {
   return [
     StarterKit.configure({
-      // HardBreak (Shift+Enter) 已內建，不需額外設定
-    }),
-    Underline,
-    Link.configure({
-      openOnClick: false,
-      autolink: true,
+      // v3 StarterKit 已內建 Underline / Link / HardBreak；Link 在此設定
+      link: {
+        openOnClick: false,
+        autolink: true,
+      },
     }),
     ResizableImage.configure({
       inline: false,
@@ -83,6 +81,19 @@ export function createDefaultExtensions(options: DefaultExtensionsOptions = {}) 
     FontFamily,
     FontSize,
     Highlight.configure({ multicolor: true }),
+    // 折疊區塊：官方 Details（v3 起 MIT），輸出原生 <details>；persist:false → 不把展開狀態寫進文件
+    Details.configure({
+      persist: false,
+      openClassName: 'is-open',
+      HTMLAttributes: { class: 'rte-details' },
+      renderToggleButton: ({ element, isOpen }) => {
+        element.classList.add('rte-details__toggle')
+        element.setAttribute('aria-label', isOpen ? '收合' : '展開')
+        element.setAttribute('aria-expanded', isOpen ? 'true' : 'false')
+      },
+    }),
+    DetailsSummary,
+    DetailsContent,
     Placeholder.configure({
       placeholder: options.placeholder ?? '開始輸入內容…',
     }),

@@ -232,6 +232,69 @@
   border-radius: 6px;
 }
 
+/* ===== Details（折疊區塊，官方 @tiptap/extension-details） ===== */
+.rte-content .ProseMirror [data-type='details'] {
+  position: relative;
+  margin: 0.6em 0;
+  padding: 8px 12px 8px 34px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+/* 折疊切換鈕（renderToggleButton 產生的 <button>），以 CSS 畫 chevron */
+.rte-content .ProseMirror [data-type='details'] > button {
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.rte-content .ProseMirror [data-type='details'] > button::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+}
+
+.rte-content .ProseMirror [data-type='details'].is-open > button::before {
+  transform: rotate(45deg);
+}
+
+.rte-content .ProseMirror [data-type='details'] summary {
+  list-style: none;
+  margin: 0;
+  font-weight: 600;
+}
+
+.rte-content .ProseMirror [data-type='details'] summary::-webkit-details-marker {
+  display: none;
+}
+
+.rte-content .ProseMirror [data-type='details'] [data-type='detailsContent'] {
+  margin-top: 6px;
+}
+
+/* 唯讀（前台預覽）：預設收合，展開時才顯示內容 */
+.rte-content .ProseMirror[contenteditable='false'] [data-type='details'] [data-type='detailsContent'] {
+  display: none;
+}
+
+.rte-content .ProseMirror[contenteditable='false'] [data-type='details'].is-open [data-type='detailsContent'] {
+  display: block;
+}
+
 /* ===== Resizable Image NodeView ===== */
 /* 移除 ProseMirror 預設整塊選取框，改由 frame 自繪緊貼圖片 */
 .rte-content .ProseMirror .rte-image.ProseMirror-selectednode {
@@ -356,6 +419,8 @@
 
 .rte-bubble-menu--table {
   padding: 4px 8px;
+  /* v3 改用 Floating UI（不再有 tippy maxWidth:'none'），自行確保表格選單不換行 */
+  max-width: none;
 }
 
 .rte-bubble-menu--link {

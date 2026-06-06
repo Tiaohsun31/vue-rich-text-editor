@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BubbleMenu } from '@tiptap/vue-3'
+import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { CellSelection } from '@tiptap/pm/tables'
 
@@ -20,7 +20,7 @@ function shouldShow() {
     :editor="editor"
     plugin-key="tableBubbleMenu"
     :should-show="shouldShow"
-    :tippy-options="{ duration: 100, placement: 'bottom', maxWidth: 'none' }"
+    :options="{ placement: 'bottom' }"
   >
     <div class="rte-bubble-menu rte-bubble-menu--table">
       <!-- 列操作 -->

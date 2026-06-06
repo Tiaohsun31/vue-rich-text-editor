@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BubbleMenu } from '@tiptap/vue-3'
+import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import {
   PencilIcon,
@@ -46,7 +46,7 @@ function editAlt() {
     :editor="editor"
     plugin-key="imageBubbleMenu"
     :should-show="shouldShow"
-    :tippy-options="{ duration: 100, placement: 'top' }"
+    :options="{ placement: 'top' }"
   >
     <div class="rte-bubble-menu">
       <button

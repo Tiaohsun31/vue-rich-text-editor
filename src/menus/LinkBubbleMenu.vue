@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { BubbleMenu } from '@tiptap/vue-3'
+import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { ExternalLinkIcon, PencilIcon, UnlinkIcon } from '../icons'
 
@@ -33,7 +33,7 @@ function openLink() {
     :editor="editor"
     plugin-key="linkBubbleMenu"
     :should-show="shouldShow"
-    :tippy-options="{ duration: 100, placement: 'bottom' }"
+    :options="{ placement: 'bottom' }"
   >
     <div class="rte-bubble-menu rte-bubble-menu--link">
       <span class="rte-bubble-link-href" :title="href">{{ href }}</span>

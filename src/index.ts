@@ -1,6 +1,7 @@
 export { default as RichTextEditor } from './components/RichTextEditor.vue'
 
 export { createDefaultExtensions } from './presets/createDefaultExtensions'
+// FontSize：v3 仍無穩定官方獨立套件，沿用建於 TextStyle 的自訂擴充
 export { FontSize } from './presets/fontSize'
 
 export { defaultToolbarItems, exportHtmlToolbarItem } from './toolbar/defaultToolbarItems'

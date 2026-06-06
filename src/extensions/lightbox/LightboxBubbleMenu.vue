@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { BubbleMenu } from '@tiptap/vue-3'
+import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { PencilIcon, TrashIcon } from '../../icons'
 
@@ -34,7 +34,7 @@ function removeLightbox() {
     :editor="editor"
     plugin-key="lightboxBubbleMenu"
     :should-show="shouldShow"
-    :tippy-options="{ duration: 100, placement: 'bottom' }"
+    :options="{ placement: 'bottom' }"
   >
     <div class="rte-bubble-menu rte-bubble-menu--link">
       <span class="rte-bubble-link-href" :title="src">🔍 {{ src || '（未設定圖片）' }}</span>

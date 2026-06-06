@@ -60,7 +60,9 @@ watch(
     const incoming =
       props.outputFormat === 'json' ? JSON.stringify(value ?? {}) : (value ?? '')
     if (current === incoming) return
-    editor.value.commands.setContent((value ?? '') as string | JSONContent, false)
+    editor.value.commands.setContent((value ?? '') as string | JSONContent, {
+      emitUpdate: false,
+    })
   },
 )
 

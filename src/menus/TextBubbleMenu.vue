@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BubbleMenu } from '@tiptap/vue-3'
+import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { CellSelection } from '@tiptap/pm/tables'
 import { BoldIcon, ItalicIcon, UnderlineIcon, StrikeIcon, LinkIcon } from '../icons'
@@ -30,7 +30,7 @@ function toggleLink() {
     :editor="editor"
     plugin-key="textBubbleMenu"
     :should-show="shouldShow"
-    :tippy-options="{ duration: 100, placement: 'top' }"
+    :options="{ placement: 'top' }"
   >
     <div class="rte-bubble-menu">
       <button
