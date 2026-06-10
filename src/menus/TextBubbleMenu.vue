@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { CellSelection } from '@tiptap/pm/tables'
 import { BoldIcon, ItalicIcon, UnderlineIcon, StrikeIcon, LinkIcon } from '../icons'
+import { rteMessagesKey, zhTW } from '../i18n'
+import { rteDialogKey, promptWithFallback } from '../dialog/dialog'
 
 const props = defineProps<{ editor: Editor }>()
+
+const t = inject(rteMessagesKey, zhTW)
+const dialog = inject(rteDialogKey, null)
 
 function shouldShow() {
   const { selection } = props.editor.state
@@ -18,10 +24,11 @@ function toggleLink() {
     props.editor.chain().focus().unsetLink().run()
     return
   }
-  const url = window.prompt('輸入連結網址')
-  if (url) {
-    props.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
-  }
+  void promptWithFallback(dialog, t.promptLinkUrl).then((url) => {
+    if (url) {
+      props.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+    }
+  })
 }
 </script>
 
@@ -37,7 +44,7 @@ function toggleLink() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': editor.isActive('bold') }"
-        title="粗體"
+        :title="t.bold"
         @mousedown.prevent="editor.chain().focus().toggleBold().run()"
       >
         <BoldIcon />
@@ -46,7 +53,7 @@ function toggleLink() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': editor.isActive('italic') }"
-        title="斜體"
+        :title="t.italic"
         @mousedown.prevent="editor.chain().focus().toggleItalic().run()"
       >
         <ItalicIcon />
@@ -55,7 +62,7 @@ function toggleLink() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': editor.isActive('underline') }"
-        title="底線"
+        :title="t.underline"
         @mousedown.prevent="editor.chain().focus().toggleUnderline().run()"
       >
         <UnderlineIcon />
@@ -64,7 +71,7 @@ function toggleLink() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': editor.isActive('strike') }"
-        title="刪除線"
+        :title="t.strike"
         @mousedown.prevent="editor.chain().focus().toggleStrike().run()"
       >
         <StrikeIcon />
@@ -74,7 +81,7 @@ function toggleLink() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': editor.isActive('link') }"
-        title="連結"
+        :title="t.link"
         @mousedown.prevent="toggleLink"
       >
         <LinkIcon />

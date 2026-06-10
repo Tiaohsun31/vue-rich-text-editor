@@ -1,19 +1,14 @@
 import StarterKit from '@tiptap/starter-kit'
-import { Table } from '@tiptap/extension-table'
-import TableRow from '@tiptap/extension-table-row'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
+import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table'
 import { Placeholder } from '@tiptap/extensions'
 import TextAlign from '@tiptap/extension-text-align'
-import { TextStyle } from '@tiptap/extension-text-style'
-import Color from '@tiptap/extension-color'
-import FontFamily from '@tiptap/extension-font-family'
+// v3 起 TextStyle 家族（Color / FontFamily / FontSize）整併於 extension-text-style
+import { TextStyle, Color, FontFamily, FontSize } from '@tiptap/extension-text-style'
 import Highlight from '@tiptap/extension-highlight'
 import Youtube from '@tiptap/extension-youtube'
 import { Details, DetailsSummary, DetailsContent } from '@tiptap/extension-details'
 import { Extension } from '@tiptap/core'
 import { TextSelection } from '@tiptap/pm/state'
-import { FontSize } from './fontSize'
 import { ResizableImage } from '../nodes/ResizableImage'
 
 export interface DefaultExtensionsOptions {

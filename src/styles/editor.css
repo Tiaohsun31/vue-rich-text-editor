@@ -1,10 +1,86 @@
 /* ===== Editor Wrapper ===== */
 .rte-editor {
+  position: relative;
   border: 1px solid #d1d5db;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+/* ===== Dialog（取代 window.prompt/alert） ===== */
+.rte-dialog {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 48px;
+  background: rgba(17, 24, 39, 0.25);
+}
+
+.rte-dialog__panel {
+  width: min(420px, calc(100% - 32px));
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 14px 16px;
+}
+
+.rte-dialog__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.rte-dialog__input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+}
+
+.rte-dialog__input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.rte-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.rte-dialog__btn {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.rte-dialog__btn:hover {
+  background: #f3f4f6;
+}
+
+.rte-dialog__btn--primary {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.rte-dialog__btn--primary:hover {
+  background: #1d4ed8;
 }
 
 /* ===== Toolbar ===== */

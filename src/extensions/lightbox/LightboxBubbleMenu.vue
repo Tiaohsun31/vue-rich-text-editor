@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { PencilIcon, TrashIcon } from '../../icons'
+import { rteMessagesKey, zhTW } from '../../i18n'
+import { rteDialogKey, promptWithFallback } from '../../dialog/dialog'
 
 const props = defineProps<{ editor: Editor }>()
+
+const t = inject(rteMessagesKey, zhTW)
+const dialog = inject(rteDialogKey, null)
 
 const src = computed(() => (props.editor.getAttributes('lightbox').src as string) ?? '')
 
@@ -15,13 +20,14 @@ function shouldShow({ from, to }: { from: number; to: number }) {
 }
 
 function editLightbox() {
-  const url = window.prompt('編輯燈箱圖片網址', src.value)
-  if (url === null) return
-  if (url === '') {
-    props.editor.chain().focus().unsetLightbox().run()
-  } else {
-    props.editor.chain().focus().extendMarkRange('lightbox').setLightbox({ imageSrc: url }).run()
-  }
+  void promptWithFallback(dialog, t.promptEditLightboxUrl, src.value).then((url) => {
+    if (url === null) return
+    if (url === '') {
+      props.editor.chain().focus().unsetLightbox().run()
+    } else {
+      props.editor.chain().focus().extendMarkRange('lightbox').setLightbox({ imageSrc: url }).run()
+    }
+  })
 }
 
 function removeLightbox() {
@@ -37,15 +43,20 @@ function removeLightbox() {
     :options="{ placement: 'bottom' }"
   >
     <div class="rte-bubble-menu rte-bubble-menu--link">
-      <span class="rte-bubble-link-href" :title="src">🔍 {{ src || '（未設定圖片）' }}</span>
+      <span class="rte-bubble-link-href" :title="src">🔍 {{ src || t.lightboxNotSet }}</span>
       <div class="rte-bubble-separator" />
-      <button type="button" class="rte-bubble-btn" title="編輯燈箱" @mousedown.prevent="editLightbox">
+      <button
+        type="button"
+        class="rte-bubble-btn"
+        :title="t.editLightbox"
+        @mousedown.prevent="editLightbox"
+      >
         <PencilIcon />
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--danger"
-        title="移除燈箱"
+        :title="t.removeLightbox"
         @mousedown.prevent="removeLightbox"
       >
         <TrashIcon />

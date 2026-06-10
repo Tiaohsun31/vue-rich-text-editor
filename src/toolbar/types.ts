@@ -1,5 +1,14 @@
 import type { Component } from 'vue'
 import type { Editor } from '@tiptap/core'
+import type { RteMessages } from '../i18n'
+import type { PromptFn } from '../dialog/dialog'
+
+/** EditorToolbar 執行 command 時帶入：文案 + 對話框服務 */
+export interface ToolbarContext {
+  t: RteMessages
+  prompt: PromptFn
+  alert: (message: string) => Promise<void>
+}
 
 export interface ToolbarButton {
   type?: 'button'
@@ -8,7 +17,7 @@ export interface ToolbarButton {
   label: string
   isActive?: (editor: Editor) => boolean
   isDisabled?: (editor: Editor) => boolean
-  command: (editor: Editor) => void
+  command: (editor: Editor, ctx?: ToolbarContext) => void
 }
 
 export interface ToolbarSeparator {

@@ -1,17 +1,36 @@
 export { default as RichTextEditor } from './components/RichTextEditor.vue'
 
 export { createDefaultExtensions } from './presets/createDefaultExtensions'
-// FontSize：v3 仍無穩定官方獨立套件，沿用建於 TextStyle 的自訂擴充
-export { FontSize } from './presets/fontSize'
+// v3 起 FontSize 為官方擴充（整併於 extension-text-style），再匯出供向下相容
+export { FontSize } from '@tiptap/extension-text-style'
 
-export { defaultToolbarItems, exportHtmlToolbarItem } from './toolbar/defaultToolbarItems'
+export {
+  defaultToolbarItems,
+  exportHtmlToolbarItem,
+  createDefaultToolbarItems,
+  createExportHtmlToolbarItem,
+} from './toolbar/defaultToolbarItems'
 export type {
   ToolbarItem,
   ToolbarButton,
   ToolbarSeparator,
   ToolbarDropdown,
   ToolbarDropdownOption,
+  ToolbarContext,
 } from './toolbar/types'
+
+// i18n
+export { locales, resolveMessages, rteMessagesKey, zhTW, zhCN, en } from './i18n'
+export type { RteLocale, RteMessages } from './i18n'
+
+// Dialog（取代 window.prompt/alert）
+export {
+  createRteDialog,
+  rteDialogKey,
+  promptWithFallback,
+  alertWithFallback,
+} from './dialog/dialog'
+export type { RteDialogService, RtePromptOptions, PromptFn } from './dialog/dialog'
 
 export type { RichTextEditorOptions, RichTextEditorContext } from './types/editor'
 export type { ImageUploadHandler } from './types/upload'

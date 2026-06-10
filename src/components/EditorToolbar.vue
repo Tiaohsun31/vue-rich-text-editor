@@ -1,19 +1,35 @@
 <script setup lang="ts">
+import { computed, inject } from 'vue'
 import type { Editor } from '@tiptap/core'
-import type { ToolbarItem } from '../toolbar/types'
-import { defaultToolbarItems } from '../toolbar/defaultToolbarItems'
+import type { ToolbarItem, ToolbarContext } from '../toolbar/types'
+import { createDefaultToolbarItems } from '../toolbar/defaultToolbarItems'
+import { rteMessagesKey, zhTW } from '../i18n'
+import { rteDialogKey } from '../dialog/dialog'
 
 const props = defineProps<{
   editor: Editor
   items?: ToolbarItem[]
 }>()
 
-const items = props.items ?? defaultToolbarItems
+const t = inject(rteMessagesKey, zhTW)
+const dialog = inject(rteDialogKey, null)
 
-function onDropdownChange(
-  item: Extract<ToolbarItem, { type: 'dropdown' }>,
-  event: Event,
-) {
+const items = computed<ToolbarItem[]>(() => props.items ?? createDefaultToolbarItems(t))
+
+const ctx: ToolbarContext = {
+  t,
+  prompt: dialog
+    ? dialog.prompt
+    : (o) => Promise.resolve(window.prompt(o.title, o.initialValue ?? '')),
+  alert: dialog
+    ? dialog.alert
+    : (message) => {
+        window.alert(message)
+        return Promise.resolve()
+      },
+}
+
+function onDropdownChange(item: Extract<ToolbarItem, { type: 'dropdown' }>, event: Event) {
   item.command(props.editor, (event.target as HTMLSelectElement).value)
 }
 </script>
@@ -44,7 +60,7 @@ function onDropdownChange(
         :class="{ 'is-active': item.isActive?.(editor) }"
         :disabled="item.isDisabled?.(editor) ?? false"
         :title="item.label"
-        @mousedown.prevent="item.command(editor)"
+        @mousedown.prevent="item.command(editor, ctx)"
       >
         <component :is="item.icon" v-if="item.icon" />
         <span v-else style="font-size: 11px; font-weight: 700">{{ item.label }}</span>

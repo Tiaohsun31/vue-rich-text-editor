@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import { CellSelection } from '@tiptap/pm/tables'
+import { rteMessagesKey, zhTW } from '../i18n'
 
 const props = defineProps<{ editor: Editor }>()
+
+const t = inject(rteMessagesKey, zhTW)
 
 function shouldShow() {
   const { selection } = props.editor.state
@@ -27,26 +31,26 @@ function shouldShow() {
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
-        title="上方插入列"
+        :title="t.rowAbove"
         @mousedown.prevent="editor.chain().focus().addRowBefore().run()"
       >
-        ↑列
+        {{ t.rowAboveShort }}
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
-        title="下方插入列"
+        :title="t.rowBelow"
         @mousedown.prevent="editor.chain().focus().addRowAfter().run()"
       >
-        ↓列
+        {{ t.rowBelowShort }}
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text rte-bubble-btn--danger"
-        title="刪除列"
+        :title="t.rowDelete"
         @mousedown.prevent="editor.chain().focus().deleteRow().run()"
       >
-        ×列
+        {{ t.rowDeleteShort }}
       </button>
 
       <div class="rte-bubble-separator" />
@@ -55,26 +59,26 @@ function shouldShow() {
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
-        title="左側插入欄"
+        :title="t.colLeft"
         @mousedown.prevent="editor.chain().focus().addColumnBefore().run()"
       >
-        ←欄
+        {{ t.colLeftShort }}
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
-        title="右側插入欄"
+        :title="t.colRight"
         @mousedown.prevent="editor.chain().focus().addColumnAfter().run()"
       >
-        →欄
+        {{ t.colRightShort }}
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text rte-bubble-btn--danger"
-        title="刪除欄"
+        :title="t.colDelete"
         @mousedown.prevent="editor.chain().focus().deleteColumn().run()"
       >
-        ×欄
+        {{ t.colDeleteShort }}
       </button>
 
       <div class="rte-bubble-separator" />
@@ -84,19 +88,19 @@ function shouldShow() {
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
         :disabled="!editor.can().mergeCells()"
-        title="合併儲存格"
+        :title="t.mergeCells"
         @mousedown.prevent="editor.chain().focus().mergeCells().run()"
       >
-        合併
+        {{ t.mergeCellsShort }}
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
         :disabled="!editor.can().splitCell()"
-        title="拆分儲存格"
+        :title="t.splitCell"
         @mousedown.prevent="editor.chain().focus().splitCell().run()"
       >
-        拆分
+        {{ t.splitCellShort }}
       </button>
 
       <div class="rte-bubble-separator" />
@@ -104,18 +108,18 @@ function shouldShow() {
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text"
-        title="切換標題列"
+        :title="t.toggleHeaderRow"
         @mousedown.prevent="editor.chain().focus().toggleHeaderRow().run()"
       >
-        標題
+        {{ t.headerShort }}
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--text rte-bubble-btn--danger"
-        title="刪除表格"
+        :title="t.deleteTable"
         @mousedown.prevent="editor.chain().focus().deleteTable().run()"
       >
-        ×表格
+        {{ t.deleteTableShort }}
       </button>
     </div>
   </BubbleMenu>

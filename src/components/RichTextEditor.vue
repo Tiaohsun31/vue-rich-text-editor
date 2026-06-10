@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { watch, onBeforeUnmount } from 'vue'
+import { watch, onBeforeUnmount, provide } from 'vue'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { createDefaultExtensions } from '../presets/createDefaultExtensions'
 import EditorToolbar from './EditorToolbar.vue'
+import RteDialog from './RteDialog.vue'
 import TextBubbleMenu from '../menus/TextBubbleMenu.vue'
 import TableBubbleMenu from '../menus/TableBubbleMenu.vue'
 import ImageBubbleMenu from '../menus/ImageBubbleMenu.vue'
 import LinkBubbleMenu from '../menus/LinkBubbleMenu.vue'
+import { resolveMessages, rteMessagesKey, type RteLocale, type RteMessages } from '../i18n'
+import { createRteDialog, rteDialogKey } from '../dialog/dialog'
 import type { Extensions, JSONContent } from '@tiptap/core'
 import type { EditorContent as EditorContentType } from '../types/content'
 import type { RichTextEditorContext } from '../types/editor'
@@ -22,15 +25,25 @@ const props = withDefaults(
     readonly?: boolean
     /** 'html'（預設）emit HTML 字串；'json' emit Tiptap JSONContent 物件 */
     outputFormat?: 'html' | 'json'
+    /** UI 語系（預設 zh-TW） */
+    locale?: RteLocale
+    /** 覆寫個別文案 */
+    messages?: Partial<RteMessages>
   }>(),
-  { outputFormat: 'html' },
+  { outputFormat: 'html', locale: 'zh-TW' },
 )
 
 const emit = defineEmits<{
   'update:modelValue': [value: EditorContentType]
 }>()
 
-const defaultExts = createDefaultExtensions({ placeholder: props.placeholder })
+const t = resolveMessages(props.locale, props.messages)
+provide(rteMessagesKey, t)
+
+const dialog = createRteDialog()
+provide(rteDialogKey, dialog)
+
+const defaultExts = createDefaultExtensions({ placeholder: props.placeholder ?? t.placeholder })
 const allExtensions: Extensions = props.resolveExtensions
   ? props.resolveExtensions({ extensions: defaultExts })
   : [...defaultExts, ...(props.extensions ?? [])]
@@ -88,5 +101,6 @@ onBeforeUnmount(() => {
       <EditorToolbar :editor="editor" :items="toolbarItems" />
     </template>
     <EditorContent :editor="editor" class="rte-content" />
+    <RteDialog v-if="!readonly" :service="dialog" />
   </div>
 </template>

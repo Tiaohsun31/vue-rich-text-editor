@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import type { Editor } from '@tiptap/core'
 import {
@@ -9,8 +10,13 @@ import {
   AlignRightIcon,
   LightboxIcon,
 } from '../icons'
+import { rteMessagesKey, zhTW } from '../i18n'
+import { rteDialogKey, promptWithFallback } from '../dialog/dialog'
 
 const props = defineProps<{ editor: Editor }>()
+
+const t = inject(rteMessagesKey, zhTW)
+const dialog = inject(rteDialogKey, null)
 
 function shouldShow() {
   return props.editor.isActive('image')
@@ -33,11 +39,12 @@ function toggleLightbox() {
 }
 
 function editAlt() {
-  const current = props.editor.getAttributes('image').alt ?? ''
-  const alt = window.prompt('圖片替代文字（alt）', current)
-  if (alt !== null) {
-    props.editor.chain().focus().updateAttributes('image', { alt }).run()
-  }
+  const current = (props.editor.getAttributes('image').alt as string) ?? ''
+  void promptWithFallback(dialog, t.promptImageAlt, current).then((alt) => {
+    if (alt !== null) {
+      props.editor.chain().focus().updateAttributes('image', { alt }).run()
+    }
+  })
 }
 </script>
 
@@ -53,7 +60,7 @@ function editAlt() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': currentAlign() === 'left' }"
-        title="靠左"
+        :title="t.alignLeft"
         @mousedown.prevent="setAlign('left')"
       >
         <AlignLeftIcon />
@@ -62,7 +69,7 @@ function editAlt() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': currentAlign() === 'center' }"
-        title="置中"
+        :title="t.alignCenter"
         @mousedown.prevent="setAlign('center')"
       >
         <AlignCenterIcon />
@@ -71,7 +78,7 @@ function editAlt() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': currentAlign() === 'right' }"
-        title="靠右"
+        :title="t.alignRight"
         @mousedown.prevent="setAlign('right')"
       >
         <AlignRightIcon />
@@ -83,18 +90,18 @@ function editAlt() {
         type="button"
         class="rte-bubble-btn"
         :class="{ 'is-active': isLightbox() }"
-        title="點圖開燈箱"
+        :title="t.toggleImageLightbox"
         @mousedown.prevent="toggleLightbox"
       >
         <LightboxIcon />
       </button>
-      <button type="button" class="rte-bubble-btn" title="編輯替代文字" @mousedown.prevent="editAlt">
+      <button type="button" class="rte-bubble-btn" :title="t.editAlt" @mousedown.prevent="editAlt">
         <PencilIcon />
       </button>
       <button
         type="button"
         class="rte-bubble-btn rte-bubble-btn--danger"
-        title="刪除圖片"
+        :title="t.deleteImage"
         @mousedown.prevent="editor.chain().focus().deleteSelection().run()"
       >
         <TrashIcon />
