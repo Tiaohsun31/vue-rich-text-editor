@@ -206,3 +206,6 @@ Built-in SVG icons are exported (e.g. `BoldIcon`, `ImageIcon`, …) for consiste
 
 Internal workspace package, not yet published to npm. All editor capabilities are
 Tiptap's and remain under Tiptap's licensing.
+
+Built-in SVG icon paths are derived from Lucide. See
+[`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) for third-party license notices.
