@@ -1,615 +1,619 @@
 /* ===== Editor Wrapper ===== */
 .rte-editor {
-  position: relative;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+	position: relative;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 }
 
 /* ===== Dialog（取代 window.prompt/alert） ===== */
 .rte-dialog {
-  position: absolute;
-  inset: 0;
-  z-index: 30;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 48px;
-  background: rgba(17, 24, 39, 0.25);
+	position: absolute;
+	inset: 0;
+	z-index: 30;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	padding-top: 48px;
+	background: rgba(17, 24, 39, 0.25);
 }
 
 .rte-dialog__panel {
-  width: min(420px, calc(100% - 32px));
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  padding: 14px 16px;
+	width: min(420px, calc(100% - 32px));
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	padding: 14px 16px;
 }
 
 .rte-dialog__title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 10px;
-  word-break: break-word;
+	font-size: 14px;
+	font-weight: 600;
+	color: #1f2937;
+	margin-bottom: 10px;
+	word-break: break-word;
 }
 
 .rte-dialog__input {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 7px 10px;
-  font-size: 14px;
-  color: #111827;
-  outline: none;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	padding: 7px 10px;
+	font-size: 14px;
+	color: #111827;
+	outline: none;
 }
 
 .rte-dialog__input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+	border-color: #2563eb;
+	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .rte-dialog__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 12px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 12px;
 }
 
 .rte-dialog__btn {
-  border: 1px solid #d1d5db;
-  background: #fff;
-  color: #374151;
-  border-radius: 6px;
-  padding: 5px 14px;
-  font-size: 13px;
-  cursor: pointer;
+	border: 1px solid #d1d5db;
+	background: #fff;
+	color: #374151;
+	border-radius: 6px;
+	padding: 5px 14px;
+	font-size: 13px;
+	cursor: pointer;
 }
 
 .rte-dialog__btn:hover {
-  background: #f3f4f6;
+	background: #f3f4f6;
 }
 
 .rte-dialog__btn--primary {
-  background: #2563eb;
-  border-color: #2563eb;
-  color: #fff;
+	background: #2563eb;
+	border-color: #2563eb;
+	color: #fff;
 }
 
 .rte-dialog__btn--primary:hover {
-  background: #1d4ed8;
+	background: #1d4ed8;
 }
 
 /* ===== Toolbar ===== */
 .rte-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 8px;
-  border-bottom: 1px solid #d1d5db;
-  background: #f9fafb;
-  flex-shrink: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	padding: 6px 8px;
+	border-bottom: 1px solid #d1d5db;
+	background: #f9fafb;
+	flex-shrink: 0;
 }
 
 .rte-toolbar-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
-  color: #374151;
-  font-size: 15px;
-  transition: background 0.12s, color 0.12s;
-  flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	border: none;
+	border-radius: 4px;
+	background: transparent;
+	cursor: pointer;
+	color: #374151;
+	font-size: 15px;
+	transition:
+		background 0.12s,
+		color 0.12s;
+	flex-shrink: 0;
 }
 
 .rte-toolbar-btn:hover:not(:disabled) {
-  background: #e5e7eb;
+	background: #e5e7eb;
 }
 
 .rte-toolbar-btn.is-active {
-  background: #dbeafe;
-  color: #1d4ed8;
+	background: #dbeafe;
+	color: #1d4ed8;
 }
 
 .rte-toolbar-btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+	opacity: 0.35;
+	cursor: not-allowed;
 }
 
 /* 統一所有 toolbar icon 尺寸，不論來源 */
 .rte-toolbar-btn svg {
-  width: 16px;
-  height: 16px;
-  flex: none;
+	width: 16px;
+	height: 16px;
+	flex: none;
 }
 
 .rte-toolbar-select {
-  height: 30px;
-  padding: 0 4px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: #fff;
-  color: #374151;
-  font-size: 12px;
-  cursor: pointer;
-  flex-shrink: 0;
+	height: 30px;
+	padding: 0 4px;
+	border: 1px solid #d1d5db;
+	border-radius: 4px;
+	background: #fff;
+	color: #374151;
+	font-size: 12px;
+	cursor: pointer;
+	flex-shrink: 0;
 }
 
 .rte-toolbar-select:hover {
-  background: #f3f4f6;
+	background: #f3f4f6;
 }
 
 .rte-toolbar-separator {
-  width: 1px;
-  height: 20px;
-  background: #d1d5db;
-  margin: 0 4px;
-  flex-shrink: 0;
+	width: 1px;
+	height: 20px;
+	background: #d1d5db;
+	margin: 0 4px;
+	flex-shrink: 0;
 }
 
 /* ===== Content Area ===== */
 .rte-content {
-  flex: 1;
-  overflow-y: auto;
+	flex: 1;
+	overflow-y: auto;
 }
 
 .rte-content .ProseMirror {
-  padding: 12px 16px;
-  min-height: 200px;
-  outline: none;
-  word-wrap: break-word;
+	padding: 12px 16px;
+	min-height: 200px;
+	outline: none;
+	word-wrap: break-word;
 }
 
 .rte-content .ProseMirror.ProseMirror-focused {
-  outline: none;
+	outline: none;
 }
 
 /* ===== Typography ===== */
 .rte-content .ProseMirror > * + * {
-  margin-top: 0.5em;
+	margin-top: 0.5em;
 }
 
 .rte-content .ProseMirror h1 {
-  font-size: 1.875em;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0.6em 0 0.4em;
+	font-size: 1.875em;
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0.6em 0 0.4em;
 }
 
 .rte-content .ProseMirror h2 {
-  font-size: 1.5em;
-  font-weight: 600;
-  line-height: 1.25;
-  margin: 0.6em 0 0.4em;
+	font-size: 1.5em;
+	font-weight: 600;
+	line-height: 1.25;
+	margin: 0.6em 0 0.4em;
 }
 
 .rte-content .ProseMirror h3 {
-  font-size: 1.25em;
-  font-weight: 600;
-  line-height: 1.3;
-  margin: 0.6em 0 0.4em;
+	font-size: 1.25em;
+	font-weight: 600;
+	line-height: 1.3;
+	margin: 0.6em 0 0.4em;
 }
 
 .rte-content .ProseMirror p {
-  margin: 0;
-  line-height: 1.6;
+	margin: 0;
+	line-height: 1.6;
 }
 
 .rte-content .ProseMirror strong {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 .rte-content .ProseMirror em {
-  font-style: italic;
+	font-style: italic;
 }
 
 .rte-content .ProseMirror u {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .rte-content .ProseMirror s {
-  text-decoration: line-through;
+	text-decoration: line-through;
 }
 
 .rte-content .ProseMirror mark {
-  background-color: #fef08a;
-  border-radius: 2px;
-  padding: 0 1px;
+	background-color: #fef08a;
+	border-radius: 2px;
+	padding: 0 1px;
 }
 
 .rte-content .ProseMirror a {
-  color: #2563eb;
-  text-decoration: underline;
-  cursor: pointer;
+	color: #2563eb;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .rte-content .ProseMirror a:hover {
-  color: #1d4ed8;
+	color: #1d4ed8;
 }
 
 .rte-content .ProseMirror ul {
-  list-style: disc;
-  padding-left: 1.4em;
-  margin: 0.4em 0;
+	list-style: disc;
+	padding-left: 1.4em;
+	margin: 0.4em 0;
 }
 
 .rte-content .ProseMirror ol {
-  list-style: decimal;
-  padding-left: 1.4em;
-  margin: 0.4em 0;
+	list-style: decimal;
+	padding-left: 1.4em;
+	margin: 0.4em 0;
 }
 
 .rte-content .ProseMirror li {
-  line-height: 1.6;
+	line-height: 1.6;
 }
 
 .rte-content .ProseMirror blockquote {
-  border-left: 3px solid #d1d5db;
-  padding-left: 1em;
-  margin: 0.5em 0;
-  color: #6b7280;
+	border-left: 3px solid #d1d5db;
+	padding-left: 1em;
+	margin: 0.5em 0;
+	color: #6b7280;
 }
 
 .rte-content .ProseMirror code {
-  background: #f3f4f6;
-  border-radius: 3px;
-  padding: 0.1em 0.3em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.9em;
+	background: #f3f4f6;
+	border-radius: 3px;
+	padding: 0.1em 0.3em;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	font-size: 0.9em;
 }
 
 .rte-content .ProseMirror pre {
-  background: #1f2937;
-  border-radius: 6px;
-  padding: 12px 16px;
-  overflow-x: auto;
-  margin: 0.5em 0;
+	background: #1f2937;
+	border-radius: 6px;
+	padding: 12px 16px;
+	overflow-x: auto;
+	margin: 0.5em 0;
 }
 
 .rte-content .ProseMirror pre code {
-  background: transparent;
-  color: #e5e7eb;
-  padding: 0;
-  font-size: 0.875em;
+	background: transparent;
+	color: #e5e7eb;
+	padding: 0;
+	font-size: 0.875em;
 }
 
 .rte-content .ProseMirror hr {
-  border: none;
-  border-top: 2px solid #e5e7eb;
-  margin: 1em 0;
+	border: none;
+	border-top: 2px solid #e5e7eb;
+	margin: 1em 0;
 }
 
 .rte-content .ProseMirror img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
 }
 
 /* ===== YouTube 嵌入 ===== */
 .rte-content .ProseMirror div[data-youtube-video] {
-  max-width: 100%;
-  margin: 0.5em 0;
+	max-width: 100%;
+	margin: 0.5em 0;
 }
 
 .rte-content .ProseMirror div[data-youtube-video] iframe {
-  max-width: 100%;
-  aspect-ratio: 16 / 9;
-  height: auto;
-  border-radius: 6px;
+	max-width: 100%;
+	aspect-ratio: 16 / 9;
+	height: auto;
+	border-radius: 6px;
 }
 
 /* ===== Details（折疊區塊，官方 @tiptap/extension-details） ===== */
 .rte-content .ProseMirror [data-type='details'] {
-  position: relative;
-  margin: 0.6em 0;
-  padding: 8px 12px 8px 34px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+	position: relative;
+	margin: 0.6em 0;
+	padding: 8px 12px 8px 34px;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
 }
 
 /* 折疊切換鈕（renderToggleButton 產生的 <button>），以 CSS 畫 chevron */
 .rte-content .ProseMirror [data-type='details'] > button {
-  position: absolute;
-  top: 10px;
-  left: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: #6b7280;
-  cursor: pointer;
+	position: absolute;
+	top: 10px;
+	left: 8px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: #6b7280;
+	cursor: pointer;
 }
 
 .rte-content .ProseMirror [data-type='details'] > button::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg);
-  transition: transform 0.2s ease;
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(-45deg);
+	transition: transform 0.2s ease;
 }
 
 .rte-content .ProseMirror [data-type='details'].is-open > button::before {
-  transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 
 .rte-content .ProseMirror [data-type='details'] summary {
-  list-style: none;
-  margin: 0;
-  font-weight: 600;
+	list-style: none;
+	margin: 0;
+	font-weight: 600;
 }
 
 .rte-content .ProseMirror [data-type='details'] summary::-webkit-details-marker {
-  display: none;
+	display: none;
 }
 
 .rte-content .ProseMirror [data-type='details'] [data-type='detailsContent'] {
-  margin-top: 6px;
+	margin-top: 6px;
 }
 
 /* 唯讀（前台預覽）：預設收合，展開時才顯示內容 */
 .rte-content .ProseMirror[contenteditable='false'] [data-type='details'] [data-type='detailsContent'] {
-  display: none;
+	display: none;
 }
 
 .rte-content .ProseMirror[contenteditable='false'] [data-type='details'].is-open [data-type='detailsContent'] {
-  display: block;
+	display: block;
 }
 
 /* ===== Resizable Image NodeView ===== */
 /* 移除 ProseMirror 預設整塊選取框，改由 frame 自繪緊貼圖片 */
 .rte-content .ProseMirror .rte-image.ProseMirror-selectednode {
-  outline: none;
+	outline: none;
 }
 
 .rte-image__frame {
-  position: relative;
-  display: inline-block;
-  line-height: 0;
-  vertical-align: bottom;
+	position: relative;
+	display: inline-block;
+	line-height: 0;
+	vertical-align: bottom;
 }
 
 .rte-image__img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
 }
 
 .rte-image__frame--editable.is-selected,
 .rte-image__frame--editable:hover {
-  outline: 2px solid #93c5fd;
-  outline-offset: 1px;
+	outline: 2px solid #93c5fd;
+	outline-offset: 1px;
 }
 
 .rte-image__handle {
-  position: absolute;
-  right: -5px;
-  bottom: -5px;
-  width: 12px;
-  height: 12px;
-  background: #2563eb;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  cursor: nwse-resize;
-  opacity: 0;
-  transition: opacity 0.12s;
+	position: absolute;
+	right: -5px;
+	bottom: -5px;
+	width: 12px;
+	height: 12px;
+	background: #2563eb;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	cursor: nwse-resize;
+	opacity: 0;
+	transition: opacity 0.12s;
 }
 
 .rte-image__frame--editable:hover .rte-image__handle,
 .rte-image__frame--editable.is-selected .rte-image__handle {
-  opacity: 1;
+	opacity: 1;
 }
 
 /* 唯讀預覽時，燈箱圖片可點放大 */
 .rte-image__img--lightbox {
-  cursor: zoom-in;
+	cursor: zoom-in;
 }
 
 /* 編輯時標示此圖為燈箱 */
 .rte-image__badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 12px;
-  line-height: 1;
-  padding: 2px 4px;
-  background: rgba(31, 41, 55, 0.85);
-  border-radius: 4px;
-  pointer-events: none;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	font-size: 12px;
+	line-height: 1;
+	padding: 2px 4px;
+	background: rgba(31, 41, 55, 0.85);
+	border-radius: 4px;
+	pointer-events: none;
 }
 
 /* ===== Table ===== */
 .rte-content .ProseMirror table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 0.5em 0;
-  table-layout: fixed;
-  overflow: hidden;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0.5em 0;
+	table-layout: fixed;
+	overflow: hidden;
 }
 
 .rte-content .ProseMirror td,
 .rte-content .ProseMirror th {
-  border: 1px solid #d1d5db;
-  padding: 6px 10px;
-  min-width: 60px;
-  vertical-align: top;
-  position: relative;
-  box-sizing: border-box;
+	border: 1px solid #d1d5db;
+	padding: 6px 10px;
+	min-width: 60px;
+	vertical-align: top;
+	position: relative;
+	box-sizing: border-box;
 }
 
 .rte-content .ProseMirror th {
-  background: #f9fafb;
-  font-weight: 600;
+	background: #f9fafb;
+	font-weight: 600;
 }
 
 .rte-content .ProseMirror .selectedCell:after {
-  z-index: 2;
-  position: absolute;
-  content: '';
-  inset: 0;
-  background: rgba(37, 99, 235, 0.12);
-  pointer-events: none;
+	z-index: 2;
+	position: absolute;
+	content: '';
+	inset: 0;
+	background: rgba(37, 99, 235, 0.12);
+	pointer-events: none;
 }
 
 .rte-content .ProseMirror .column-resize-handle {
-  position: absolute;
-  right: -2px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: #93c5fd;
-  pointer-events: none;
+	position: absolute;
+	right: -2px;
+	top: 0;
+	bottom: 0;
+	width: 4px;
+	background-color: #93c5fd;
+	pointer-events: none;
 }
 
 .rte-content .ProseMirror.resize-cursor {
-  cursor: col-resize;
+	cursor: col-resize;
 }
 
 /* ===== Bubble Menus ===== */
 .rte-bubble-menu {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 4px 6px;
-  background: #1f2937;
-  border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  white-space: nowrap;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 4px 6px;
+	background: #1f2937;
+	border-radius: 6px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+	white-space: nowrap;
 }
 
 .rte-bubble-menu--table {
-  padding: 4px 8px;
-  /* v3 改用 Floating UI（不再有 tippy maxWidth:'none'），自行確保表格選單不換行 */
-  max-width: none;
+	padding: 4px 8px;
+	/* v3 改用 Floating UI（不再有 tippy maxWidth:'none'），自行確保表格選單不換行 */
+	max-width: none;
 }
 
 .rte-bubble-menu--link {
-  padding: 4px 8px;
-  gap: 4px;
+	padding: 4px 8px;
+	gap: 4px;
 }
 
 .rte-bubble-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
-  color: #e5e7eb;
-  font-size: 14px;
-  transition: background 0.12s, color 0.12s;
-  flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: none;
+	border-radius: 4px;
+	background: transparent;
+	cursor: pointer;
+	color: #e5e7eb;
+	font-size: 14px;
+	transition:
+		background 0.12s,
+		color 0.12s;
+	flex-shrink: 0;
 }
 
 .rte-bubble-btn--text {
-  width: auto;
-  padding: 0 6px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+	width: auto;
+	padding: 0 6px;
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.01em;
 }
 
 .rte-bubble-btn:hover:not(:disabled) {
-  background: #374151;
+	background: #374151;
 }
 
 .rte-bubble-btn.is-active {
-  background: #2563eb;
-  color: #fff;
+	background: #2563eb;
+	color: #fff;
 }
 
 .rte-bubble-btn--danger:hover:not(:disabled) {
-  background: #7f1d1d;
-  color: #fca5a5;
+	background: #7f1d1d;
+	color: #fca5a5;
 }
 
 .rte-bubble-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+	opacity: 0.3;
+	cursor: not-allowed;
 }
 
 .rte-bubble-separator {
-  width: 1px;
-  height: 18px;
-  background: #4b5563;
-  margin: 0 2px;
-  flex-shrink: 0;
+	width: 1px;
+	height: 18px;
+	background: #4b5563;
+	margin: 0 2px;
+	flex-shrink: 0;
 }
 
 .rte-bubble-link-href {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 12px;
-  color: #93c5fd;
-  padding: 0 4px;
+	max-width: 200px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+	color: #93c5fd;
+	padding: 0 4px;
 }
 
 /* ===== Placeholder ===== */
 .rte-content .ProseMirror p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #9ca3af;
-  pointer-events: none;
-  height: 0;
+	content: attr(data-placeholder);
+	float: left;
+	color: #9ca3af;
+	pointer-events: none;
+	height: 0;
 }
 
 /* ===== Lightbox 標記顯示 ===== */
 .rte-content .ProseMirror a[data-lightbox] {
-  cursor: zoom-in;
-  text-decoration: underline dotted;
-  text-underline-offset: 2px;
+	cursor: zoom-in;
+	text-decoration: underline dotted;
+	text-underline-offset: 2px;
 }
 
 /* ===== Image Upload Placeholder ===== */
 .rte-image-uploading {
-  display: inline-block;
-  width: 48px;
-  height: 48px;
-  vertical-align: middle;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  background: #f3f4f6;
-  position: relative;
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	vertical-align: middle;
+	border-radius: 6px;
+	border: 1px solid #d1d5db;
+	background: #f3f4f6;
+	position: relative;
 }
 
 .rte-image-uploading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 18px;
-  margin: -9px 0 0 -9px;
-  border: 2px solid #d1d5db;
-  border-top-color: #2563eb;
-  border-radius: 50%;
-  animation: rte-spin 0.7s linear infinite;
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 18px;
+	height: 18px;
+	margin: -9px 0 0 -9px;
+	border: 2px solid #d1d5db;
+	border-top-color: #2563eb;
+	border-radius: 50%;
+	animation: rte-spin 0.7s linear infinite;
 }
 
 @keyframes rte-spin {
-  to {
-    transform: rotate(360deg);
-  }
+	to {
+		transform: rotate(360deg);
+	}
 }
