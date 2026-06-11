@@ -24,6 +24,7 @@
     }
   },
   "scripts": {
+    "format": "oxfmt src/",
     "lint": "oxlint ."
   },
   "dependencies": {
