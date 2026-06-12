@@ -1,6 +1,6 @@
 # @tiaohsun/vue-rich-text-editor
 
-> **English** · [繁體中文](./README.zh-TW.md)
+> **English** · [繁體中文](https://github.com/Tiaohsun31/vue-rich-text-editor/blob/main/README.zh-TW.md)
 
 A thin, batteries-included Vue 3 wrapper around [Tiptap](https://tiptap.dev) v3.
 
@@ -203,9 +203,9 @@ Built-in SVG icons are exported (e.g. `BoldIcon`, `ImageIcon`, …) for consiste
 
 ## License
 
-MIT — see [`LICENSE`](./LICENSE).
+MIT — see [`LICENSE`](https://github.com/Tiaohsun31/vue-rich-text-editor/blob/main/LICENSE).
 
 All editor capabilities are provided by [Tiptap](https://tiptap.dev) (MIT) and remain
 under Tiptap's licensing; Tiptap is a peer dependency, not bundled. Built-in SVG icon
 paths are derived from Lucide (ISC). See
-[`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) for third-party license notices.
+[`THIRD_PARTY_NOTICES.md`](https://github.com/Tiaohsun31/vue-rich-text-editor/blob/main/THIRD_PARTY_NOTICES.md) for third-party license notices.

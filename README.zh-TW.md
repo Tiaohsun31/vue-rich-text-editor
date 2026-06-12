@@ -1,6 +1,6 @@
 # @tiaohsun/vue-rich-text-editor
 
-> [English](./README.md) · **繁體中文**
+> [English](https://github.com/Tiaohsun31/vue-rich-text-editor/blob/main/README.md) · **繁體中文**
 
 一個基於 [Tiptap](https://tiptap.dev) v3 的輕量 Vue 3 封裝，開箱即用。
 
@@ -200,6 +200,6 @@ const toolbarItems: ToolbarItem[] = [
 
 ## 授權
 
-MIT —— 見 [`LICENSE`](./LICENSE)。
+MIT —— 見 [`LICENSE`](https://github.com/Tiaohsun31/vue-rich-text-editor/blob/main/LICENSE)。
 
-所有編輯能力均由 [Tiptap](https://tiptap.dev)（MIT）提供並沿用其授權；Tiptap 為 peer 依賴、不打包進本套件。內建 SVG icon path 衍生自 Lucide（ISC）。第三方授權聲明見 [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md)。
+所有編輯能力均由 [Tiptap](https://tiptap.dev)（MIT）提供並沿用其授權；Tiptap 為 peer 依賴、不打包進本套件。內建 SVG icon path 衍生自 Lucide（ISC）。第三方授權聲明見 [`THIRD_PARTY_NOTICES.md`](https://github.com/Tiaohsun31/vue-rich-text-editor/blob/main/THIRD_PARTY_NOTICES.md)。

@@ -1,18 +1,17 @@
 {
   "name": "@tiaohsun/vue-rich-text-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A thin, batteries-included Vue 3 wrapper around Tiptap v3 — editor component, toolbar, bubble menus, i18n, HTML/JSON output.",
   "type": "module",
   "license": "MIT",
   "author": "Tiaohsun",
-  "homepage": "https://github.com/Tiaohsun31/eShop.ClientApp/tree/main/eShop.ClientApp/packages/rich-text-editor#readme",
+  "homepage": "https://github.com/Tiaohsun31/vue-rich-text-editor#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tiaohsun31/eShop.ClientApp.git",
-    "directory": "eShop.ClientApp/packages/rich-text-editor"
+    "url": "git+https://github.com/Tiaohsun31/vue-rich-text-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/Tiaohsun31/eShop.ClientApp/issues"
+    "url": "https://github.com/Tiaohsun31/vue-rich-text-editor/issues"
   },
   "keywords": [
     "vue",
