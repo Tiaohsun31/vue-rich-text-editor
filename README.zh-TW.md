@@ -1,4 +1,4 @@
-# @eshop/rich-text-editor
+# @tiaohsun/vue-rich-text-editor
 
 > [English](./README.md) · **繁體中文**
 
@@ -35,18 +35,16 @@
 
 ## 安裝
 
-本套件為 workspace 套件（尚未發行至 npm）：
-
-```jsonc
-// package.json
-{
-  "dependencies": {
-    "@eshop/rich-text-editor": "workspace:*"
-  }
-}
+```bash
+npm i @tiaohsun/vue-rich-text-editor
+# 或：pnpm add @tiaohsun/vue-rich-text-editor
 ```
 
-peer 依賴：`vue@^3.5`。
+以下 peer 依賴需一併安裝（刻意維持單一份，避免重複的 ProseMirror/Tiptap 實例）：
+
+```bash
+npm i vue@^3.5 @tiptap/core@^3 @tiptap/pm@^3 @tiptap/vue-3@^3
+```
 
 ---
 
@@ -55,8 +53,8 @@ peer 依賴：`vue@^3.5`。
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RichTextEditor } from '@eshop/rich-text-editor'
-import '@eshop/rich-text-editor/styles'
+import { RichTextEditor } from '@tiaohsun/vue-rich-text-editor'
+import '@tiaohsun/vue-rich-text-editor/styles'
 
 const content = ref('') // 預設為 HTML 字串
 </script>
@@ -100,7 +98,7 @@ const content = ref('') // 預設為 HTML 字串
 
 ```vue
 <script setup lang="ts">
-import { RichTextEditor } from '@eshop/rich-text-editor'
+import { RichTextEditor } from '@tiaohsun/vue-rich-text-editor'
 import MyExtension from './MyExtension' // 一般的 Node/Mark/Extension.create(...)
 </script>
 
@@ -112,7 +110,7 @@ import MyExtension from './MyExtension' // 一般的 Node/Mark/Extension.create(
 需要完全掌控預設集？用 `resolveExtensions`：
 
 ```ts
-import { createDefaultExtensions } from '@eshop/rich-text-editor'
+import { createDefaultExtensions } from '@tiaohsun/vue-rich-text-editor'
 
 const resolve = () => [
   ...createDefaultExtensions({ placeholder: '…' }),
@@ -132,8 +130,8 @@ const resolve = () => [
 ### 圖片上傳
 
 ```ts
-import { ImageUploadExtension, imageUploadToolbarItem } from '@eshop/rich-text-editor/extensions/image-upload'
-import type { ImageUploadHandler } from '@eshop/rich-text-editor/extensions/image-upload'
+import { ImageUploadExtension, imageUploadToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/image-upload'
+import type { ImageUploadHandler } from '@tiaohsun/vue-rich-text-editor/extensions/image-upload'
 
 const upload: ImageUploadHandler = async (file) => {
   const url = await uploadSomewhere(file) // 你的儲存（R2、S3…）
@@ -152,7 +150,7 @@ const upload: ImageUploadHandler = async (file) => {
 ### 燈箱（Lightbox）
 
 ```ts
-import { LightboxExtension, lightboxToolbarItem } from '@eshop/rich-text-editor/extensions/lightbox'
+import { LightboxExtension, lightboxToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/lightbox'
 ```
 
 ```vue
@@ -170,8 +168,8 @@ import { LightboxExtension, lightboxToolbarItem } from '@eshop/rich-text-editor/
 Toolbar 是一個扁平的項目清單，可從預設組合出自己的版本：
 
 ```ts
-import { defaultToolbarItems, exportHtmlToolbarItem } from '@eshop/rich-text-editor'
-import type { ToolbarItem } from '@eshop/rich-text-editor'
+import { defaultToolbarItems, exportHtmlToolbarItem } from '@tiaohsun/vue-rich-text-editor'
+import type { ToolbarItem } from '@tiaohsun/vue-rich-text-editor'
 
 const toolbarItems: ToolbarItem[] = [
   ...defaultToolbarItems,
@@ -200,6 +198,8 @@ const toolbarItems: ToolbarItem[] = [
 
 ---
 
-## 授權 / 狀態
+## 授權
 
-內部 workspace 套件，尚未發行至 npm。所有編輯能力均為 Tiptap 提供，並沿用 Tiptap 授權。
+MIT —— 見 [`LICENSE`](./LICENSE)。
+
+所有編輯能力均由 [Tiptap](https://tiptap.dev)（MIT）提供並沿用其授權；Tiptap 為 peer 依賴、不打包進本套件。內建 SVG icon path 衍生自 Lucide（ISC）。第三方授權聲明見 [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md)。

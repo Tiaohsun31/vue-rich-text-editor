@@ -1,4 +1,4 @@
-# @eshop/rich-text-editor
+# @tiaohsun/vue-rich-text-editor
 
 > **English** · [繁體中文](./README.zh-TW.md)
 
@@ -37,18 +37,17 @@ Optional (opt-in) extensions: image upload handler, lightbox.
 
 ## Install
 
-This is a workspace package (not yet published to npm):
-
-```jsonc
-// package.json
-{
-  "dependencies": {
-    "@eshop/rich-text-editor": "workspace:*"
-  }
-}
+```bash
+npm i @tiaohsun/vue-rich-text-editor
+# or: pnpm add @tiaohsun/vue-rich-text-editor
 ```
 
-Peer dependency: `vue@^3.5`.
+Peer dependencies you must also install (kept as a single shared copy to avoid
+duplicate ProseMirror/Tiptap instances):
+
+```bash
+npm i vue@^3.5 @tiptap/core@^3 @tiptap/pm@^3 @tiptap/vue-3@^3
+```
 
 ---
 
@@ -57,8 +56,8 @@ Peer dependency: `vue@^3.5`.
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RichTextEditor } from '@eshop/rich-text-editor'
-import '@eshop/rich-text-editor/styles'
+import { RichTextEditor } from '@tiaohsun/vue-rich-text-editor'
+import '@tiaohsun/vue-rich-text-editor/styles'
 
 const content = ref('') // HTML string by default
 </script>
@@ -102,7 +101,7 @@ Read-only rendering (e.g. to display saved content):
 
 ```vue
 <script setup lang="ts">
-import { RichTextEditor } from '@eshop/rich-text-editor'
+import { RichTextEditor } from '@tiaohsun/vue-rich-text-editor'
 import MyExtension from './MyExtension' // a normal Node/Mark/Extension.create(...)
 </script>
 
@@ -114,7 +113,7 @@ import MyExtension from './MyExtension' // a normal Node/Mark/Extension.create(.
 Need full control over the default set? Use `resolveExtensions`:
 
 ```ts
-import { createDefaultExtensions } from '@eshop/rich-text-editor'
+import { createDefaultExtensions } from '@tiaohsun/vue-rich-text-editor'
 
 const resolve = () => [
   ...createDefaultExtensions({ placeholder: '…' }),
@@ -134,8 +133,8 @@ Imported from subpaths so they stay out of the core bundle until you opt in.
 ### Image upload
 
 ```ts
-import { ImageUploadExtension, imageUploadToolbarItem } from '@eshop/rich-text-editor/extensions/image-upload'
-import type { ImageUploadHandler } from '@eshop/rich-text-editor/extensions/image-upload'
+import { ImageUploadExtension, imageUploadToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/image-upload'
+import type { ImageUploadHandler } from '@tiaohsun/vue-rich-text-editor/extensions/image-upload'
 
 const upload: ImageUploadHandler = async (file) => {
   const url = await uploadSomewhere(file) // your storage (R2, S3, …)
@@ -154,7 +153,7 @@ const upload: ImageUploadHandler = async (file) => {
 ### Lightbox
 
 ```ts
-import { LightboxExtension, lightboxToolbarItem } from '@eshop/rich-text-editor/extensions/lightbox'
+import { LightboxExtension, lightboxToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/lightbox'
 ```
 
 ```vue
@@ -172,8 +171,8 @@ import { LightboxExtension, lightboxToolbarItem } from '@eshop/rich-text-editor/
 The toolbar is a flat list of items. Compose your own from the defaults:
 
 ```ts
-import { defaultToolbarItems, exportHtmlToolbarItem } from '@eshop/rich-text-editor'
-import type { ToolbarItem } from '@eshop/rich-text-editor'
+import { defaultToolbarItems, exportHtmlToolbarItem } from '@tiaohsun/vue-rich-text-editor'
+import type { ToolbarItem } from '@tiaohsun/vue-rich-text-editor'
 
 const toolbarItems: ToolbarItem[] = [
   ...defaultToolbarItems,
@@ -202,10 +201,11 @@ Built-in SVG icons are exported (e.g. `BoldIcon`, `ImageIcon`, …) for consiste
 
 ---
 
-## License / status
+## License
 
-Internal workspace package, not yet published to npm. All editor capabilities are
-Tiptap's and remain under Tiptap's licensing.
+MIT — see [`LICENSE`](./LICENSE).
 
-Built-in SVG icon paths are derived from Lucide. See
+All editor capabilities are provided by [Tiptap](https://tiptap.dev) (MIT) and remain
+under Tiptap's licensing; Tiptap is a peer dependency, not bundled. Built-in SVG icon
+paths are derived from Lucide (ISC). See
 [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) for third-party license notices.

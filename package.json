@@ -1,9 +1,33 @@
 {
-  "name": "@eshop/rich-text-editor",
-  "version": "0.0.1",
-  "private": true,
+  "name": "@tiaohsun/vue-rich-text-editor",
+  "version": "0.1.0",
+  "description": "A thin, batteries-included Vue 3 wrapper around Tiptap v3 — editor component, toolbar, bubble menus, i18n, HTML/JSON output.",
   "type": "module",
+  "license": "MIT",
+  "author": "Tiaohsun",
+  "homepage": "https://github.com/Tiaohsun31/eShop.ClientApp/tree/main/eShop.ClientApp/packages/rich-text-editor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tiaohsun31/eShop.ClientApp.git",
+    "directory": "eShop.ClientApp/packages/rich-text-editor"
+  },
+  "bugs": {
+    "url": "https://github.com/Tiaohsun31/eShop.ClientApp/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "tiptap",
+    "rich-text-editor",
+    "wysiwyg",
+    "editor",
+    "prosemirror"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": {
@@ -23,13 +47,45 @@
       "default": "./src/styles/editor.css"
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh-TW.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/copy-assets.mjs",
+    "prepack": "pnpm build",
     "format": "oxfmt src/",
     "lint": "oxlint ."
   },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./extensions/image-upload": {
+        "types": "./dist/extensions/image-upload/index.d.ts",
+        "default": "./dist/extensions/image-upload/index.js"
+      },
+      "./extensions/lightbox": {
+        "types": "./dist/extensions/lightbox/index.d.ts",
+        "default": "./dist/extensions/lightbox/index.js"
+      },
+      "./styles": {
+        "types": "./dist/styles/index.d.ts",
+        "default": "./dist/editor.css"
+      }
+    }
+  },
   "dependencies": {
     "@floating-ui/dom": "^1.6.0",
-    "@tiptap/core": "^3.26.0",
     "@tiptap/extension-details": "^3.26.0",
     "@tiptap/extension-highlight": "^3.26.0",
     "@tiptap/extension-image": "^3.26.0",
@@ -38,14 +94,21 @@
     "@tiptap/extension-text-style": "^3.26.0",
     "@tiptap/extension-youtube": "^3.26.0",
     "@tiptap/extensions": "^3.26.0",
-    "@tiptap/pm": "^3.26.0",
-    "@tiptap/starter-kit": "^3.26.0",
-    "@tiptap/vue-3": "^3.26.0"
+    "@tiptap/starter-kit": "^3.26.0"
   },
   "peerDependencies": {
+    "@tiptap/core": "^3.0.0",
+    "@tiptap/pm": "^3.0.0",
+    "@tiptap/vue-3": "^3.0.0",
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "vite": "^8.0.11"
+    "@tiptap/core": "^3.26.0",
+    "@tiptap/pm": "^3.26.0",
+    "@tiptap/vue-3": "^3.26.0",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "vite": "^8.0.11",
+    "vue": "^3.5.34",
+    "vue-tsc": "^3.3.4"
   }
 }
