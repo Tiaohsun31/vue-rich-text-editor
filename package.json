@@ -56,6 +56,7 @@
   "scripts": {
     "build": "vite build && vue-tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/copy-assets.mjs",
     "prepack": "pnpm build",
+    "mirror": "node scripts/mirror.mjs",
     "format": "oxfmt src/",
     "lint": "oxlint ."
   },
