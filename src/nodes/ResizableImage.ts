@@ -22,37 +22,24 @@ export const ResizableImage = Image.extend({
 				parseHTML: (el) => el.getAttribute('data-align') || 'left',
 				renderHTML: () => ({}),
 			},
-			lightbox: {
-				default: false,
-				parseHTML: (el) => el.getAttribute('data-lightbox') === 'true',
-				renderHTML: () => ({}),
-			},
 		}
 	},
 
+	// 注意：lightbox 屬性與其 data-* 輸出由 opt-in 的 ImageLightbox 擴充
+	// （extensions/image-lightbox）透過 addGlobalAttributes 掛上，核心不耦合。
 	renderHTML({ HTMLAttributes, node }) {
 		const width = node.attrs.width as string | null
 		const align = (node.attrs.align as string) ?? 'left'
-		const lightbox = node.attrs.lightbox as boolean
 		const style: string[] = ['max-width:100%']
 		if (width) style.push(`width:${width}`)
 		if (align === 'center') style.push('display:block', 'margin-left:auto', 'margin-right:auto')
 		else if (align === 'right') style.push('display:block', 'margin-left:auto')
-
-		const lightboxAttrs = lightbox
-			? {
-					'data-lightbox': 'true',
-					'data-lightbox-src': (node.attrs.src as string) ?? '',
-					'data-lightbox-alt': (node.attrs.alt as string) ?? '',
-				}
-			: {}
 
 		return [
 			'img',
 			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
 				style: style.join(';'),
 				'data-align': align,
-				...lightboxAttrs,
 			}),
 		]
 	},

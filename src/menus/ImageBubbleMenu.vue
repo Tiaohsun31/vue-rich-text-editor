@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/core'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 
 import { rteDialogKey, promptWithFallback } from '../dialog/dialog'
 import { rteMessagesKey, zhTW } from '../i18n'
@@ -11,6 +11,9 @@ const props = defineProps<{ editor: Editor }>()
 
 const t = inject(rteMessagesKey, zhTW)
 const dialog = inject(rteDialogKey, null)
+
+// 圖片燈箱為 opt-in 擴充：僅當載入 ImageLightbox（extensions/image-lightbox）時才顯示按鈕
+const lightboxEnabled = computed(() => props.editor.extensionManager.extensions.some((ext) => ext.name === 'imageLightbox'))
 
 function shouldShow() {
 	return props.editor.isActive('image')
@@ -73,6 +76,7 @@ function editAlt() {
 			<div class="rte-bubble-separator" />
 
 			<button
+				v-if="lightboxEnabled"
 				type="button"
 				class="rte-bubble-btn"
 				:class="{ 'is-active': isLightbox() }"

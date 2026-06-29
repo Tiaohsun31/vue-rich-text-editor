@@ -29,7 +29,7 @@
 - 可設定的 toolbar 與 文字/表格/圖片/連結 bubble menu
 - 輸出為 **HTML** 或 **Tiptap JSON**
 
-選用（需自行載入）擴充：圖片上傳 handler、燈箱（lightbox）。
+選用（需自行載入）擴充：圖片上傳 handler、文字燈箱、圖片燈箱。
 
 ---
 
@@ -147,7 +147,9 @@ const upload: ImageUploadHandler = async (file) => {
 />
 ```
 
-### 燈箱（Lightbox）
+### 文字燈箱（Text lightbox）
+
+把選取的文字包成 `<a data-lightbox="true" data-lightbox-type="text" …>`。
 
 ```ts
 import { LightboxExtension, lightboxToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/lightbox'
@@ -159,6 +161,23 @@ import { LightboxExtension, lightboxToolbarItem } from '@tiaohsun/vue-rich-text-
   :extensions="[LightboxExtension.configure({})]"
   :toolbar-items="[...defaultToolbarItems, lightboxToolbarItem]"
 />
+```
+
+### 圖片燈箱（Image lightbox）
+
+在圖片上加 `lightbox` 屬性。標記開啟後，圖片會輸出 `data-lightbox="true"` /
+`data-lightbox-src` / `data-lightbox-alt`，供前台燈箱套件讀取。
+
+此擴充只產生「標記契約」，本身不會顯示燈箱。**屬於 opt-in**：未載入時，圖片
+BubbleMenu 的燈箱開關按鈕與編輯器內的 🔍 標記都不會出現。請僅在前台確實接了
+燈箱檢視器時才載入。
+
+```ts
+import { ImageLightbox } from '@tiaohsun/vue-rich-text-editor/extensions/image-lightbox'
+```
+
+```vue
+<RichTextEditor v-model="content" :extensions="[ImageLightbox]" />
 ```
 
 ---

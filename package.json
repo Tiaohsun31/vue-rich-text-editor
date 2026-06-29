@@ -1,6 +1,6 @@
 {
   "name": "@tiaohsun/vue-rich-text-editor",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A thin, batteries-included Vue 3 wrapper around Tiptap v3 — editor component, toolbar, bubble menus, i18n, HTML/JSON output.",
   "type": "module",
   "license": "MIT",
@@ -41,6 +41,10 @@
       "types": "./src/extensions/lightbox/index.ts",
       "default": "./src/extensions/lightbox/index.ts"
     },
+    "./extensions/image-lightbox": {
+      "types": "./src/extensions/image-lightbox/index.ts",
+      "default": "./src/extensions/image-lightbox/index.ts"
+    },
     "./styles": {
       "types": "./src/styles/index.d.ts",
       "default": "./src/styles/editor.css"
@@ -78,6 +82,10 @@
         "types": "./dist/extensions/lightbox/index.d.ts",
         "default": "./dist/extensions/lightbox/index.js"
       },
+      "./extensions/image-lightbox": {
+        "types": "./dist/extensions/image-lightbox/index.d.ts",
+        "default": "./dist/extensions/image-lightbox/index.js"
+      },
       "./styles": {
         "types": "./dist/styles/index.d.ts",
         "default": "./dist/editor.css"
@@ -86,15 +94,15 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6",
-    "@tiptap/extension-details": "^3.27.0",
-    "@tiptap/extension-highlight": "^3.27.0",
-    "@tiptap/extension-image": "^3.27.0",
-    "@tiptap/extension-table": "^3.27.0",
-    "@tiptap/extension-text-align": "^3.27.0",
-    "@tiptap/extension-text-style": "^3.27.0",
-    "@tiptap/extension-youtube": "^3.27.0",
-    "@tiptap/extensions": "^3.27.0",
-    "@tiptap/starter-kit": "^3.27.0"
+    "@tiptap/extension-details": "^3.27.1",
+    "@tiptap/extension-highlight": "^3.27.1",
+    "@tiptap/extension-image": "^3.27.1",
+    "@tiptap/extension-table": "^3.27.1",
+    "@tiptap/extension-text-align": "^3.27.1",
+    "@tiptap/extension-text-style": "^3.27.1",
+    "@tiptap/extension-youtube": "^3.27.1",
+    "@tiptap/extensions": "^3.27.1",
+    "@tiptap/starter-kit": "^3.27.1"
   },
   "peerDependencies": {
     "@tiptap/core": "^3.0.0",
@@ -103,12 +111,12 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "@tiptap/core": "^3.27.0",
-    "@tiptap/pm": "^3.27.0",
-    "@tiptap/vue-3": "^3.27.0",
+    "@tiptap/core": "^3.27.1",
+    "@tiptap/pm": "^3.27.1",
+    "@tiptap/vue-3": "^3.27.1",
     "@vitejs/plugin-vue": "^6.0.7",
-    "vite": "^8.0.16",
-    "vue": "^3.5.38",
+    "vite": "^8.1.0",
+    "vue": "^3.5.39",
     "vue-tsc": "^3.3.5"
   }
 }

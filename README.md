@@ -31,7 +31,7 @@ All provided by Tiptap, pre-wired here:
 - A configurable toolbar and text/table/image/link bubble menus
 - Output as **HTML** or **Tiptap JSON**
 
-Optional (opt-in) extensions: image upload handler, lightbox.
+Optional (opt-in) extensions: image upload handler, text lightbox, image lightbox.
 
 ---
 
@@ -150,7 +150,9 @@ const upload: ImageUploadHandler = async (file) => {
 />
 ```
 
-### Lightbox
+### Text lightbox
+
+Wraps the selected text in `<a data-lightbox="true" data-lightbox-type="text" …>`.
 
 ```ts
 import { LightboxExtension, lightboxToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/lightbox'
@@ -162,6 +164,25 @@ import { LightboxExtension, lightboxToolbarItem } from '@tiaohsun/vue-rich-text-
   :extensions="[LightboxExtension.configure({})]"
   :toolbar-items="[...defaultToolbarItems, lightboxToolbarItem]"
 />
+```
+
+### Image lightbox
+
+Adds a `lightbox` attribute to images. When toggled on, the image renders with
+`data-lightbox="true"` / `data-lightbox-src` / `data-lightbox-alt` for a front-end
+lightbox library to pick up.
+
+This extension only produces the markup contract — it does not display a lightbox
+itself. **It is opt-in**: without it, the image bubble-menu lightbox toggle and the
+in-editor 🔍 badge do not appear. Load it only when your front-end actually wires up
+a lightbox viewer.
+
+```ts
+import { ImageLightbox } from '@tiaohsun/vue-rich-text-editor/extensions/image-lightbox'
+```
+
+```vue
+<RichTextEditor v-model="content" :extensions="[ImageLightbox]" />
 ```
 
 ---

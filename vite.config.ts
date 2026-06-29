@@ -17,6 +17,7 @@ export default defineConfig({
         index: r('src/index.ts'),
         'extensions/image-upload/index': r('src/extensions/image-upload/index.ts'),
         'extensions/lightbox/index': r('src/extensions/lightbox/index.ts'),
+        'extensions/image-lightbox/index': r('src/extensions/image-lightbox/index.ts'),
       },
       formats: ['es'],
     },
