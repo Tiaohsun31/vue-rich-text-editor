@@ -4,7 +4,7 @@ import { CellSelection } from '@tiptap/pm/tables'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import { inject } from 'vue'
 
-import { rteDialogKey, promptWithFallback } from '../dialog/dialog'
+import { rteDialogKey, promptLinkWithFallback } from '../dialog/dialog'
 import { rteMessagesKey, zhTW } from '../i18n'
 import { BoldIcon, ItalicIcon, UnderlineIcon, StrikeIcon, LinkIcon } from '../icons'
 
@@ -25,10 +25,18 @@ function toggleLink() {
 		props.editor.chain().focus().unsetLink().run()
 		return
 	}
-	void promptWithFallback(dialog, t.promptLinkUrl).then((url) => {
-		if (url) {
-			props.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
-		}
+	void promptLinkWithFallback(dialog, { title: t.promptLinkUrl, checkboxLabel: t.openInNewTab }).then((result) => {
+		if (!result?.url) return
+		props.editor
+			.chain()
+			.focus()
+			.extendMarkRange('link')
+			.setLink({
+				href: result.url,
+				target: result.openInNewTab ? '_blank' : null,
+				rel: result.openInNewTab ? 'noopener noreferrer' : null,
+			})
+			.run()
 	})
 }
 </script>

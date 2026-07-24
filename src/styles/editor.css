@@ -52,6 +52,23 @@
 	box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
+.rte-dialog__checkbox {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	margin-top: 10px;
+	font-size: 13px;
+	color: #374151;
+	cursor: pointer;
+	user-select: none;
+}
+
+.rte-dialog__checkbox input {
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+}
+
 .rte-dialog__actions {
 	display: flex;
 	justify-content: flex-end;

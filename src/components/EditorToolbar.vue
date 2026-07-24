@@ -20,6 +20,12 @@ const items = computed<ToolbarItem[]>(() => props.items ?? createDefaultToolbarI
 const ctx: ToolbarContext = {
 	t,
 	prompt: dialog ? dialog.prompt : (o) => Promise.resolve(window.prompt(o.title, o.initialValue ?? '')),
+	promptLink: dialog
+		? dialog.promptLink
+		: (o) => {
+				const url = window.prompt(o.title, o.initialValue ?? '')
+				return Promise.resolve(url === null ? null : { url, openInNewTab: o.checkboxInitial ?? false })
+			},
 	alert: dialog
 		? dialog.alert
 		: (message) => {

@@ -1,13 +1,14 @@
 import type { Editor } from '@tiptap/core'
 import type { Component } from 'vue'
 
-import type { PromptFn } from '../dialog/dialog'
+import type { LinkPromptFn, PromptFn } from '../dialog/dialog'
 import type { RteMessages } from '../i18n'
 
 /** EditorToolbar 執行 command 時帶入：文案 + 對話框服務 */
 export interface ToolbarContext {
 	t: RteMessages
 	prompt: PromptFn
+	promptLink: LinkPromptFn
 	alert: (message: string) => Promise<void>
 }
 

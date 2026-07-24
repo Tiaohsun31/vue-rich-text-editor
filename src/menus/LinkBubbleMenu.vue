@@ -3,7 +3,7 @@ import type { Editor } from '@tiptap/core'
 import { BubbleMenu } from '@tiptap/vue-3/menus'
 import { computed, inject } from 'vue'
 
-import { rteDialogKey, promptWithFallback } from '../dialog/dialog'
+import { rteDialogKey, promptLinkWithFallback } from '../dialog/dialog'
 import { rteMessagesKey, zhTW } from '../i18n'
 import { ExternalLinkIcon, PencilIcon, UnlinkIcon } from '../icons'
 
@@ -13,6 +13,7 @@ const t = inject(rteMessagesKey, zhTW)
 const dialog = inject(rteDialogKey, null)
 
 const href = computed(() => (props.editor.getAttributes('link').href as string) ?? '')
+const opensInNewTab = computed(() => props.editor.getAttributes('link').target === '_blank')
 
 function shouldShow({ from, to }: { from: number; to: number }) {
 	if (from !== to) return false
@@ -20,12 +21,26 @@ function shouldShow({ from, to }: { from: number; to: number }) {
 }
 
 function editLink() {
-	void promptWithFallback(dialog, t.promptEditLinkUrl, href.value).then((url) => {
-		if (url === null) return
-		if (url === '') {
+	void promptLinkWithFallback(dialog, {
+		title: t.promptEditLinkUrl,
+		initialValue: href.value,
+		checkboxLabel: t.openInNewTab,
+		checkboxInitial: opensInNewTab.value,
+	}).then((result) => {
+		if (result === null) return
+		if (result.url === '') {
 			props.editor.chain().focus().unsetLink().run()
 		} else {
-			props.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+			props.editor
+				.chain()
+				.focus()
+				.extendMarkRange('link')
+				.setLink({
+					href: result.url,
+					target: result.openInNewTab ? '_blank' : null,
+					rel: result.openInNewTab ? 'noopener noreferrer' : null,
+				})
+				.run()
 		}
 	})
 }

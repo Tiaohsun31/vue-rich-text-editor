@@ -1,6 +1,6 @@
 import type { Editor } from '@tiptap/core'
 
-import { promptWithFallback, alertWithFallback } from '../dialog/dialog'
+import { promptWithFallback, promptLinkWithFallback, alertWithFallback } from '../dialog/dialog'
 import type { RteMessages } from '../i18n'
 import { zhTW } from '../i18n'
 import {
@@ -241,8 +241,17 @@ export function createDefaultToolbarItems(t: RteMessages = zhTW): ToolbarItem[] 
 					e.chain().focus().unsetLink().run()
 					return
 				}
-				void promptWithFallback(ctx, t.promptLinkUrl).then((url) => {
-					if (url) e.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+				void promptLinkWithFallback(ctx, { title: t.promptLinkUrl, checkboxLabel: t.openInNewTab }).then((result) => {
+					if (!result?.url) return
+					e.chain()
+						.focus()
+						.extendMarkRange('link')
+						.setLink({
+							href: result.url,
+							target: result.openInNewTab ? '_blank' : null,
+							rel: result.openInNewTab ? 'noopener noreferrer' : null,
+						})
+						.run()
 				})
 			},
 		},

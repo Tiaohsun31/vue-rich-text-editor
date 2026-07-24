@@ -52,6 +52,14 @@ export function createDefaultExtensions(options: DefaultExtensionsOptions = {}) 
 			link: {
 				openOnClick: false,
 				autolink: true,
+				// 沒有協定的網址預設補 https（mailto:/tel: 等已帶 scheme 者不受影響）
+				defaultProtocol: 'https',
+				// 預設同頁開啟、不強加 nofollow（對齊主流編輯器的中性預設）；
+				// 「另開視窗」改由連結逐條在勾選時補 target=_blank + rel=noopener noreferrer
+				HTMLAttributes: {
+					target: null,
+					rel: null,
+				},
 			},
 		}),
 		ResizableImage.configure({

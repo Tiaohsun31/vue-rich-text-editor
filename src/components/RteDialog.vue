@@ -32,6 +32,10 @@ watch(
 				:placeholder="service.state.placeholder"
 				@keydown.enter.prevent="service.confirm()"
 				@keydown.esc.prevent="service.cancel()" />
+			<label v-if="service.state.mode === 'prompt' && service.state.checkbox" class="rte-dialog__checkbox">
+				<input v-model="service.state.checkbox.value" type="checkbox" />
+				<span>{{ service.state.checkbox.label }}</span>
+			</label>
 			<div class="rte-dialog__actions">
 				<button v-if="service.state.mode === 'prompt'" type="button" class="rte-dialog__btn" @click="service.cancel()">
 					{{ t.cancel }}
