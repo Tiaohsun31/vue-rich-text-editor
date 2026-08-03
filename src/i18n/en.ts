@@ -38,6 +38,8 @@ export const en: RteMessages = {
 	promptEditLinkUrl: 'Edit link URL',
 	promptImageUrl: 'Enter image URL',
 	promptYoutubeUrl: 'Enter YouTube video URL',
+	promptEditYoutubeUrl: 'Edit YouTube video URL',
+	invalidYoutubeUrl: 'That is not a valid YouTube video URL',
 	promptImageAlt: 'Image alt text',
 	promptLightboxUrl: 'Enter lightbox image URL',
 	promptEditLightboxUrl: 'Edit lightbox image URL',
@@ -73,6 +75,9 @@ export const en: RteMessages = {
 	editAlt: 'Edit alt text',
 	deleteImage: 'Delete image',
 	toggleImageLightbox: 'Open lightbox on click',
+
+	editYoutubeUrl: 'Edit video URL',
+	deleteYoutube: 'Delete video',
 
 	editLightbox: 'Edit lightbox',
 	removeLightbox: 'Remove lightbox',

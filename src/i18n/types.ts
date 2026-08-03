@@ -39,6 +39,8 @@ export interface RteMessages {
 	promptEditLinkUrl: string
 	promptImageUrl: string
 	promptYoutubeUrl: string
+	promptEditYoutubeUrl: string
+	invalidYoutubeUrl: string
 	promptImageAlt: string
 	promptLightboxUrl: string
 	promptEditLightboxUrl: string
@@ -77,6 +79,10 @@ export interface RteMessages {
 	editAlt: string
 	deleteImage: string
 	toggleImageLightbox: string
+
+	// youtube bubble menu
+	editYoutubeUrl: string
+	deleteYoutube: string
 
 	// lightbox bubble menu
 	editLightbox: string

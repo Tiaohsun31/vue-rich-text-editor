@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 
 const props = defineProps(nodeViewProps)
 
-const editable = computed<boolean>(() => props.editor.isEditable)
+// editor.isEditable 不是響應式來源（computed 會停在建立當下的值），
+// 改用 ref + setEditable() 發出的 update 事件同步
+const editable = ref<boolean>(props.editor.isEditable)
+function syncEditable() {
+	editable.value = props.editor.isEditable
+}
+props.editor.on('update', syncEditable)
+onBeforeUnmount(() => props.editor.off('update', syncEditable))
 const width = computed<string | null>(() => props.node.attrs.width)
 const align = computed<string>(() => props.node.attrs.align ?? 'left')
 const lightbox = computed<boolean>(() => props.node.attrs.lightbox === true)

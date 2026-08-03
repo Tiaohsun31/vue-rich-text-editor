@@ -24,11 +24,11 @@ All provided by Tiptap, pre-wired here:
 - Links (with a link bubble menu)
 - Tables (insert/merge/split via a table bubble menu)
 - Images — resizable & alignable node view, with an image bubble menu
-- YouTube embeds
+- YouTube embeds — resizable & alignable node view, with a video bubble menu
 - Text alignment, text color, font family, font size, highlight
 - Collapsible blocks via the official `Details` extension (native `<details>`)
 - Placeholder, and `Ctrl/Cmd+Shift+Enter` to exit a blockquote/table
-- A configurable toolbar and text/table/image/link bubble menus
+- A configurable toolbar and text/table/image/video/link bubble menus
 - Output as **HTML** or **Tiptap JSON**
 
 Optional (opt-in) extensions: image upload handler, text lightbox, image lightbox.

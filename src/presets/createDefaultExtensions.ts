@@ -5,12 +5,12 @@ import { Table, TableRow, TableCell, TableHeader } from '@tiptap/extension-table
 import TextAlign from '@tiptap/extension-text-align'
 // v3 起 TextStyle 家族（Color / FontFamily / FontSize）整併於 extension-text-style
 import { TextStyle, Color, FontFamily, FontSize } from '@tiptap/extension-text-style'
-import Youtube from '@tiptap/extension-youtube'
 import { Placeholder } from '@tiptap/extensions'
 import { TextSelection } from '@tiptap/pm/state'
 import StarterKit from '@tiptap/starter-kit'
 
 import { ResizableImage } from '../nodes/ResizableImage'
+import { ResizableYoutube } from '../nodes/ResizableYoutube'
 
 export interface DefaultExtensionsOptions {
 	placeholder?: string
@@ -72,7 +72,7 @@ export function createDefaultExtensions(options: DefaultExtensionsOptions = {}) 
 		TableRow,
 		TableCell,
 		TableHeader,
-		Youtube.configure({
+		ResizableYoutube.configure({
 			controls: true,
 			nocookie: true,
 			HTMLAttributes: { class: 'rte-youtube' },

@@ -38,6 +38,8 @@ export const zhCN: RteMessages = {
 	promptEditLinkUrl: '编辑链接网址',
 	promptImageUrl: '输入图片网址',
 	promptYoutubeUrl: '输入 YouTube 视频网址',
+	promptEditYoutubeUrl: '编辑 YouTube 视频网址',
+	invalidYoutubeUrl: '这不是有效的 YouTube 视频网址',
 	promptImageAlt: '图片替代文字（alt）',
 	promptLightboxUrl: '输入灯箱要显示的图片网址',
 	promptEditLightboxUrl: '编辑灯箱图片网址',
@@ -73,6 +75,9 @@ export const zhCN: RteMessages = {
 	editAlt: '编辑替代文字',
 	deleteImage: '删除图片',
 	toggleImageLightbox: '点图开灯箱',
+
+	editYoutubeUrl: '编辑视频网址',
+	deleteYoutube: '删除视频',
 
 	editLightbox: '编辑灯箱',
 	removeLightbox: '移除灯箱',

@@ -17,7 +17,8 @@ function shouldShow() {
 	const { selection } = props.editor.state
 	// 跨儲存格選取交給 TableBubbleMenu 處理
 	if (selection instanceof CellSelection) return false
-	return !selection.empty && !props.editor.isActive('image')
+	// 圖片 / 影片為 NodeSelection（非 empty），交給各自的 bubble menu
+	return !selection.empty && !props.editor.isActive('image') && !props.editor.isActive('youtube')
 }
 
 function toggleLink() {

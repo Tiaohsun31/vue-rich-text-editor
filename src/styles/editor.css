@@ -314,7 +314,7 @@
 	border-radius: 4px;
 }
 
-/* ===== YouTube 嵌入 ===== */
+/* ===== YouTube 嵌入（無 NodeView 時的原生輸出，例如前台直接渲染 HTML） ===== */
 .rte-content .ProseMirror div[data-youtube-video] {
 	max-width: 100%;
 	margin: 0.5em 0;
@@ -432,6 +432,69 @@
 
 .rte-image__frame--editable:hover .rte-image__handle,
 .rte-image__frame--editable.is-selected .rte-image__handle {
+	opacity: 1;
+}
+
+/* ===== Resizable YouTube NodeView ===== */
+/* 移除 ProseMirror 預設整塊選取框，改由 frame 自繪緊貼影片 */
+.rte-content .ProseMirror .rte-video.ProseMirror-selectednode {
+	outline: none;
+}
+
+.rte-video {
+	margin: 0.5em 0;
+}
+
+.rte-video__frame {
+	position: relative;
+	display: inline-block;
+	line-height: 0;
+	vertical-align: bottom;
+}
+
+.rte-video__iframe {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	border: 0;
+	border-radius: 6px;
+}
+
+/* 編輯時 iframe 不接事件，點擊才會選到節點（而不是直接播放） */
+.rte-video__frame--editable .rte-video__iframe {
+	pointer-events: none;
+}
+
+.rte-video__frame--editable.is-selected,
+.rte-video__frame--editable:hover {
+	outline: 2px solid #93c5fd;
+	outline-offset: 1px;
+}
+
+.rte-video__handle {
+	position: absolute;
+	right: -5px;
+	bottom: -5px;
+	width: 12px;
+	height: 12px;
+	background: #2563eb;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	cursor: nwse-resize;
+	opacity: 0;
+	transition: opacity 0.12s;
+}
+
+/* 靠右對齊時右緣固定、左緣才會動，把手改放左下並反向拖曳 */
+.rte-video__handle--flip {
+	right: auto;
+	left: -5px;
+	cursor: nesw-resize;
+}
+
+.rte-video__frame--editable:hover .rte-video__handle,
+.rte-video__frame--editable.is-selected .rte-video__handle {
 	opacity: 1;
 }
 

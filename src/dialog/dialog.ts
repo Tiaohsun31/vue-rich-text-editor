@@ -135,7 +135,10 @@ export function promptWithFallback(ctx: { prompt: PromptFn } | undefined | null,
 }
 
 /** 同 promptWithFallback，但帶勾選框；無對話框服務時退回 window.prompt（勾選狀態沿用初始值） */
-export function promptLinkWithFallback(ctx: { promptLink: LinkPromptFn } | undefined | null, options: RteLinkPromptOptions): Promise<RteLinkPromptResult | null> {
+export function promptLinkWithFallback(
+	ctx: { promptLink: LinkPromptFn } | undefined | null,
+	options: RteLinkPromptOptions,
+): Promise<RteLinkPromptResult | null> {
 	if (ctx?.promptLink) return ctx.promptLink(options)
 	const url = window.prompt(options.title, options.initialValue ?? '')
 	if (url === null) return Promise.resolve(null)

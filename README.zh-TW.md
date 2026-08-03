@@ -22,11 +22,11 @@
 - 連結（附連結 bubble menu）
 - 表格（插入/合併/拆分，附表格 bubble menu）
 - 圖片 —— 可縮放/可對齊的 node view，附圖片 bubble menu
-- YouTube 內嵌
+- YouTube 內嵌 —— 可縮放/可對齊的 node view，附影片 bubble menu
 - 文字對齊、文字顏色、字型、字級、螢光標記
 - 折疊區塊：採官方 `Details` 擴充（輸出原生 `<details>`）
 - Placeholder，及 `Ctrl/Cmd+Shift+Enter` 跳出引用/表格
-- 可設定的 toolbar 與 文字/表格/圖片/連結 bubble menu
+- 可設定的 toolbar 與 文字/表格/圖片/影片/連結 bubble menu
 - 輸出為 **HTML** 或 **Tiptap JSON**
 
 選用（需自行載入）擴充：圖片上傳 handler、文字燈箱、圖片燈箱。

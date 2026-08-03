@@ -36,10 +36,10 @@
 ```
 src/
   components/   RichTextEditor.vue（主入口）、EditorToolbar.vue、RteDialog.vue
-  menus/        TextBubbleMenu / TableBubbleMenu / ImageBubbleMenu / LinkBubbleMenu
+  menus/        TextBubbleMenu / TableBubbleMenu / ImageBubbleMenu / YoutubeBubbleMenu / LinkBubbleMenu
   presets/      createDefaultExtensions.ts（預設 extension 組合）
   extensions/   optional（subpath export）：image-upload / lightbox / image-lightbox
-  nodes/        ResizableImage（縮放 + 對齊 NodeView）
+  nodes/        ResizableImage、ResizableYoutube（縮放 + 對齊 NodeView）
   toolbar/      types.ts（ToolbarItem）、defaultToolbarItems.ts
   dialog/       dialog.ts（createRteDialog / promptWithFallback，取代 window.prompt/alert）
   i18n/         zh-TW / zh-CN / en + types.ts + index.ts
@@ -71,7 +71,7 @@ Optional extensions 走 subpath：`@tiaohsun/vue-rich-text-editor/extensions/{im
 
 ### `createDefaultExtensions`
 
-StarterKit（v3 內建 Underline / Link）、ResizableImage、Table 家族、Youtube、TextAlign、TextStyle/Color/FontFamily/FontSize、Highlight、Details（官方折疊，`persist:false`）、Placeholder、ExitBlock（Ctrl+Shift+Enter 跳出 blockquote/table）。
+StarterKit（v3 內建 Underline / Link）、ResizableImage、Table 家族、ResizableYoutube、TextAlign、TextStyle/Color/FontFamily/FontSize、Highlight、Details（官方折疊，`persist:false`）、Placeholder、ExitBlock（Ctrl+Shift+Enter 跳出 blockquote/table）。
 
 **Link 設定**：`openOnClick:false`、`autolink:true`、`defaultProtocol:'https'`、`HTMLAttributes:{ target:null, rel:null }`。預設**同頁開啟、不加 nofollow**（中性預設）；「另開視窗」為逐條 opt-in，勾選時由連結 UI 補 `target=_blank` + `rel=noopener noreferrer`（見「連結行為」）。
 
@@ -96,6 +96,15 @@ setLink({
 ```
 
 `rel` 不對使用者暴露、也不提供 `nofollow`（對齊 CKEditor `openInNewTab` decorator / TinyMCE）。`mailto:` / `tel:` 不特別處理——Tiptap 預設協定白名單已含,貼上 / 輸入即可用。
+
+### 影片行為（YouTube）
+
+官方 `@tiptap/extension-youtube` 只輸出 `div[data-youtube-video] > iframe`，沒有對齊屬性也沒有 NodeView，因此本套件用 `ResizableYoutube`（`Youtube.extend`）補齊：
+
+- **點擊選取而非播放**：跨來源 iframe 會吃掉 `mousedown`，ProseMirror 收不到事件就不會產生 `NodeSelection`，bubble menu 也永遠無法觸發。編輯時由 NodeView 讓 iframe `pointer-events:none`；唯讀時恢復可播放。
+- **對齊 / 寬度**：新增 `align`（`left`/`center`/`right`）與 `size`（百分比字串）兩個 attr。**不能靠 `TextAlign`**——官方 `renderHTML` 把 `HTMLAttributes` 併進 iframe 而非外層 div，`text-align` 會落在錯的元素上。輸出時 `align`/`size` 寫成外層 div 的 `data-align` + inline `width`/`margin`，匯出的 HTML 不依賴編輯器 CSS。
+- `renderHTML` 以 `this.parent?.(props)` 取回官方輸出再加工，不複製 embed URL 組裝邏輯；NodeView 端則用官方匯出的 `getEmbedUrlFromYoutubeUrl` 依 `options` 組 URL。
+- `editor.isEditable` **不是響應式來源**（NodeView 內用 `computed` 會停在建立當下的值）；需要跟著 `readonly` 變動的狀態改用 `ref` + `editor.on('update')` 同步。
 
 ### i18n
 

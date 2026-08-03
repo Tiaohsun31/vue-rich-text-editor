@@ -38,6 +38,8 @@ export const zhTW: RteMessages = {
 	promptEditLinkUrl: '編輯連結網址',
 	promptImageUrl: '輸入圖片網址',
 	promptYoutubeUrl: '輸入 YouTube 影片網址',
+	promptEditYoutubeUrl: '編輯 YouTube 影片網址',
+	invalidYoutubeUrl: '這不是有效的 YouTube 影片網址',
 	promptImageAlt: '圖片替代文字（alt）',
 	promptLightboxUrl: '輸入燈箱要顯示的圖片網址',
 	promptEditLightboxUrl: '編輯燈箱圖片網址',
@@ -73,6 +75,9 @@ export const zhTW: RteMessages = {
 	editAlt: '編輯替代文字',
 	deleteImage: '刪除圖片',
 	toggleImageLightbox: '點圖開燈箱',
+
+	editYoutubeUrl: '編輯影片網址',
+	deleteYoutube: '刪除影片',
 
 	editLightbox: '編輯燈箱',
 	removeLightbox: '移除燈箱',

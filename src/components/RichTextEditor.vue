@@ -9,6 +9,7 @@ import ImageBubbleMenu from '../menus/ImageBubbleMenu.vue'
 import LinkBubbleMenu from '../menus/LinkBubbleMenu.vue'
 import TableBubbleMenu from '../menus/TableBubbleMenu.vue'
 import TextBubbleMenu from '../menus/TextBubbleMenu.vue'
+import YoutubeBubbleMenu from '../menus/YoutubeBubbleMenu.vue'
 import { createDefaultExtensions } from '../presets/createDefaultExtensions'
 import type { ToolbarItem } from '../toolbar/types'
 import type { EditorContent as EditorContentType } from '../types/content'
@@ -94,6 +95,7 @@ onBeforeUnmount(() => {
 			<TextBubbleMenu :editor="editor" />
 			<TableBubbleMenu :editor="editor" />
 			<ImageBubbleMenu :editor="editor" />
+			<YoutubeBubbleMenu :editor="editor" />
 			<LinkBubbleMenu :editor="editor" />
 			<EditorToolbar :editor="editor" :items="toolbarItems" />
 		</template>
