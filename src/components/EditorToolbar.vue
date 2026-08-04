@@ -10,6 +10,8 @@ import type { ToolbarItem, ToolbarContext } from '../toolbar/types'
 const props = defineProps<{
 	editor: Editor
 	items?: ToolbarItem[]
+	/** 是否釘在捲動容器頂端 */
+	sticky?: boolean
 }>()
 
 const t = inject(rteMessagesKey, zhTW)
@@ -40,7 +42,7 @@ function onDropdownChange(item: Extract<ToolbarItem, { type: 'dropdown' }>, even
 </script>
 
 <template>
-	<div class="rte-toolbar">
+	<div class="rte-toolbar" :class="{ 'rte-toolbar--sticky': sticky }">
 		<template v-for="(item, index) in items" :key="index">
 			<div v-if="item.type === 'separator'" class="rte-toolbar-separator" />
 

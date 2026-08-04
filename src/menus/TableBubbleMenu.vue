@@ -21,7 +21,7 @@ function shouldShow() {
 </script>
 
 <template>
-	<BubbleMenu :editor="editor" plugin-key="tableBubbleMenu" :should-show="shouldShow" :options="{ placement: 'bottom' }">
+	<BubbleMenu class="rte-bubble-root" :editor="editor" plugin-key="tableBubbleMenu" :should-show="shouldShow" :options="{ placement: 'bottom' }">
 		<div class="rte-bubble-menu rte-bubble-menu--table">
 			<!-- 列操作 -->
 			<button

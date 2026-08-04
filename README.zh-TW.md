@@ -89,6 +89,28 @@ const content = ref('') // 預設為 HTML 字串
 | `toolbarItems`      | `ToolbarItem[]`                                 | 預設     | 覆寫 toolbar（見下方）。                              |
 | `placeholder`       | `string`                                        | —        | placeholder 文字。                                    |
 | `readonly`          | `boolean`                                       | `false`  | 停用編輯；隱藏 toolbar 與 bubble menu。               |
+| `stickyToolbar`     | `boolean`                                       | `true`   | 把 toolbar 釘在捲動容器頂端（見下方）。               |
+
+### Sticky toolbar
+
+Toolbar 會釘在「實際在捲動的那一層」頂端——可能是頁面，也可能是最近的可捲動祖先
+（modal 內容區、可捲動面板）。長文編輯時不必再往回捲才找得到工具列；行為對齊
+CKEditor 5 classic editor 與 TinyMCE 的 `toolbar_sticky`。
+
+若頁面有 `position: fixed` / `sticky` 的頂欄會蓋住 toolbar，用 CSS 變數設偏移量——
+概念同 CKEditor 的 `ui.viewportOffset.top` 與 TinyMCE 的 `toolbar_sticky_offset`，
+和它們一樣預設為 `0`：
+
+```css
+.my-editor-wrapper {
+	--rte-toolbar-offset: 64px;
+}
+```
+
+要完全關閉就傳 `:sticky-toolbar="false"`。
+
+> 前提：捲動容器與編輯器之間不能有 `overflow: hidden` 的祖先，否則 sticky 會被關在
+> 那一層裡面。`overflow: clip` 與 `overflow: auto/scroll` 都沒問題。
 
 ---
 
@@ -179,6 +201,29 @@ import { ImageLightbox } from '@tiaohsun/vue-rich-text-editor/extensions/image-l
 ```vue
 <RichTextEditor v-model="content" :extensions="[ImageLightbox]" />
 ```
+
+### 版面區塊（`grid`、`flex-columns`）
+
+兩個 opt-in 的多欄排版區塊。多欄排版並非 CKEditor 5 / TinyMCE 的核心功能（兩者都得裝外掛），因此走 optional extension、不放進預設組合。
+
+- **`grid`** —— 響應式網格，桌面（1–6）與手機（1–3）欄數分開設定，可從區塊自己的工具列調整。
+- **`flex-columns`** —— 雙欄版型，可指定哪一側佔滿剩餘寬度，窄容器自動上下排列。
+
+```ts
+import { GridExtension, createGridToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/grid'
+import { FlexColumnsExtension, createFlexColumnsToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/flex-columns'
+```
+
+```vue
+<RichTextEditor
+  v-model="content"
+  :extensions="[GridExtension, FlexColumnsExtension]"
+  :toolbar-items="[...defaultToolbarItems, createGridToolbarItem(), createFlexColumnsToolbarItem()]" />
+```
+
+也可直接下命令：`editor.commands.insertGrid({ minColumns, maxColumns })`、`editor.commands.insertFlexColumns({ growSide })`。
+
+**匯出 HTML 自帶版面**——容器與項目的樣式都寫成 inline style，前台渲染不需要載任何 CSS；編輯器內的樣式則跟其他部分一樣放在 `/styles`。
 
 ---
 

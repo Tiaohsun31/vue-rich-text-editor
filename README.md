@@ -92,6 +92,29 @@ Read-only rendering (e.g. to display saved content):
 | `toolbarItems`      | `ToolbarItem[]`                                 | defaults | Override the toolbar (see below).                       |
 | `placeholder`       | `string`                                        | —        | Placeholder text.                                       |
 | `readonly`          | `boolean`                                       | `false`  | Disable editing; hides the toolbar and bubble menus.    |
+| `stickyToolbar`     | `boolean`                                       | `true`   | Pin the toolbar to the top of the scroll container (see below). |
+
+### Sticky toolbar
+
+The toolbar stays pinned to the top of whatever scrolls — the page, or the nearest
+scrollable ancestor (a modal body, a scrollable panel). This keeps it reachable in
+long documents, matching CKEditor 5's classic editor and TinyMCE's `toolbar_sticky`.
+
+If your page has a `position: fixed` / `sticky` header that would cover the toolbar,
+set the offset via CSS — the same idea as CKEditor's `ui.viewportOffset.top` and
+TinyMCE's `toolbar_sticky_offset`, and like both of those it defaults to `0`:
+
+```css
+.my-editor-wrapper {
+	--rte-toolbar-offset: 64px;
+}
+```
+
+Pass `:sticky-toolbar="false"` to opt out entirely.
+
+> Requires that no ancestor between the scroll container and the editor uses
+> `overflow: hidden` — that would trap the sticky element inside it. `overflow: clip`
+> and `overflow: auto/scroll` are both fine.
 
 ---
 
@@ -184,6 +207,36 @@ import { ImageLightbox } from '@tiaohsun/vue-rich-text-editor/extensions/image-l
 ```vue
 <RichTextEditor v-model="content" :extensions="[ImageLightbox]" />
 ```
+
+### Layout blocks (`grid`, `flex-columns`)
+
+Two opt-in multi-column layout blocks. Multi-column layout is not a core feature of
+CKEditor 5 or TinyMCE either, so these ship as optional extensions rather than
+defaults.
+
+- **`grid`** — a responsive grid with separate desktop (1–6) and mobile (1–3)
+  column counts, adjustable from the block's own toolbar.
+- **`flex-columns`** — two columns where either side takes the remaining width, and
+  which stacks vertically in narrow containers.
+
+```ts
+import { GridExtension, createGridToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/grid'
+import { FlexColumnsExtension, createFlexColumnsToolbarItem } from '@tiaohsun/vue-rich-text-editor/extensions/flex-columns'
+```
+
+```vue
+<RichTextEditor
+  v-model="content"
+  :extensions="[GridExtension, FlexColumnsExtension]"
+  :toolbar-items="[...defaultToolbarItems, createGridToolbarItem(), createFlexColumnsToolbarItem()]" />
+```
+
+Both commands are also available directly: `editor.commands.insertGrid({ minColumns, maxColumns })`
+and `editor.commands.insertFlexColumns({ growSide })`.
+
+Exported HTML is self-contained — container and item styles are written inline, so
+rendered content needs no stylesheet. The editor's own styling for these blocks lives
+in `/styles` like everything else.
 
 ---
 

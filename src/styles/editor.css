@@ -3,7 +3,10 @@
 	position: relative;
 	border: 1px solid #d1d5db;
 	border-radius: 8px;
+	/* clip 一樣裁切圓角，但不建立 scroll container——sticky toolbar 才能對外層捲動容器生效。
+	   hidden 為 Safari < 16 的 fallback（該環境 sticky 不生效，但版面正常）。 */
 	overflow: hidden;
+	overflow: clip;
 	display: flex;
 	flex-direction: column;
 }
@@ -110,6 +113,32 @@
 	border-bottom: 1px solid #d1d5db;
 	background: #f9fafb;
 	flex-shrink: 0;
+}
+
+/* 長文編輯時把工具列釘在捲動容器頂端。
+   宿主若有 position:fixed/sticky 的頂欄擋住，覆寫 --rte-toolbar-offset（對齊 CKEditor
+   的 ui.viewportOffset.top 與 TinyMCE 的 toolbar_sticky_offset，兩者預設同樣是 0）。 */
+.rte-toolbar--sticky {
+	position: sticky;
+	top: var(--rte-toolbar-offset, 0px);
+	z-index: 20;
+	/* 內容會捲到工具列底下。只靠 1px 邊框分隔時，圖片被切齊的斷面看起來像糊在一起，
+	   補一道淺陰影讓工具列讀起來是浮在內容之上的一層（同 CKEditor / TinyMCE 的做法）。 */
+	box-shadow: 0 2px 4px rgba(17, 24, 39, 0.06);
+}
+
+/* sticky 的 top 是相對捲動容器的 content box（已扣掉 padding），不是可視頂端。宿主捲動容器
+   若有 padding-top（例如 Tailwind 的 p-4），工具列會停在低於可視頂端 padding 的位置，中間那條
+   縫會露出底下捲動的內容。用一條往上延伸的遮罩補起來：未吸附時它落在 .rte-editor 的裁切範圍外
+   （工具列貼齊編輯器頂端），完全看不到；吸附後才補上那條縫。 */
+.rte-toolbar--sticky::before {
+	content: '';
+	position: absolute;
+	right: 0;
+	bottom: 100%;
+	left: 0;
+	height: 100vh;
+	background: inherit;
 }
 
 .rte-toolbar-btn {
@@ -564,6 +593,12 @@
 }
 
 /* ===== Bubble Menus ===== */
+/* Floating UI 的浮層容器（BubbleMenu 元件根 div，被掛進 .rte-content）。
+   sticky toolbar 有 z-index，浮層必須疊在它之上，否則貼齊頂端時會被蓋住。 */
+.rte-bubble-root {
+	z-index: 25;
+}
+
 .rte-bubble-menu {
 	display: flex;
 	align-items: center;
@@ -695,5 +730,289 @@
 @keyframes rte-spin {
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+/* ===== Grid（optional extension：extensions/grid） ===== */
+.rte-grid {
+	border-radius: 8px;
+	margin: 0.6em 0;
+}
+
+.rte-grid:not(.rte-grid--readonly) {
+	border: 2px dashed #d1d5db;
+	padding: 8px;
+}
+
+.rte-grid__content {
+	display: grid;
+	gap: 0.75rem;
+}
+
+/* v3 @tiptap/vue-3 會在 content 元素內多包一層 [data-node-view-content-vue]，
+   用 display:contents 攤平該層，讓真正的 .rte-grid-cell 成為 grid 的直接子項 */
+.rte-grid__content > [data-node-view-content-vue] {
+	display: contents;
+}
+
+/* 編輯器：直接呈現設定的桌面欄數，所見即所得 */
+.rte-grid:not(.rte-grid--readonly) .rte-grid__content {
+	grid-template-columns: repeat(var(--rte-cols, 1), minmax(0, 1fr));
+}
+
+/* 唯讀（前台預覽）：手機 = min 欄、桌面 = cols 欄 響應式 */
+.rte-grid--readonly .rte-grid__content {
+	grid-template-columns: repeat(var(--rte-min-cols, 1), minmax(0, 1fr));
+}
+
+@media (min-width: 1024px) {
+	.rte-grid--readonly .rte-grid__content {
+		grid-template-columns: repeat(var(--rte-cols, 1), minmax(0, 1fr));
+	}
+}
+
+.rte-grid__bar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-bottom: 8px;
+	padding: 4px 6px;
+	background: #f3f4f6;
+	border-radius: 6px;
+	font-size: 12px;
+	color: #6b7280;
+	user-select: none;
+}
+
+.rte-grid__label {
+	font-weight: 600;
+}
+
+.rte-grid__ctrl {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.rte-grid__ctrl-label {
+	color: #9ca3af;
+}
+
+.rte-grid__num {
+	min-width: 14px;
+	text-align: center;
+	font-weight: 600;
+	color: #374151;
+}
+
+.rte-grid__icon {
+	width: 14px;
+	height: 14px;
+}
+
+.rte-grid__bar button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 3px;
+	border: 1px solid #d1d5db;
+	background: #fff;
+	border-radius: 4px;
+	height: 22px;
+	min-width: 22px;
+	padding: 0 4px;
+	cursor: pointer;
+	color: #374151;
+	font-size: 12px;
+}
+
+.rte-grid__bar button:hover {
+	background: #e5e7eb;
+}
+
+.rte-grid__bar button:focus-visible {
+	outline: 2px solid #2563eb;
+	outline-offset: 2px;
+}
+
+.rte-grid__bar .rte-grid__delete {
+	margin-left: auto;
+	border-color: #fecaca;
+	color: #b91c1c;
+}
+
+.rte-grid__bar .rte-grid__delete:hover {
+	border-color: #fca5a5;
+	background: #fee2e2;
+}
+
+.rte-grid__bar .rte-grid__delete:focus-visible {
+	outline-color: #dc2626;
+}
+
+/* .rte-grid-cell 因 v3 包了一層 [data-node-view-content-vue]，非 content 的直接子層 */
+.rte-grid:not(.rte-grid--readonly) .rte-grid__content > [data-node-view-content-vue] > .rte-grid-cell {
+	border: 1px solid #e5e7eb;
+	border-radius: 4px;
+	padding: 8px;
+	min-height: 44px;
+	background: #fff;
+}
+
+/* ===== Flex Columns（optional extension：extensions/flex-columns） ===== */
+/* 編輯畫面用 container query 換行；匯出 HTML 走 flex-wrap + min-width，兩者刻意不同機制
+   （匯出端不需要 container query 支援），請勿「順手統一」而弄壞匯出。 */
+.rte-flex-columns {
+	container: rte-flex-columns / inline-size;
+	margin: 0.75em 0;
+	border-radius: 8px;
+}
+
+.rte-flex-columns:not(.rte-flex-columns--readonly) {
+	border: 2px dashed #cbd5e1;
+	padding: 8px;
+}
+
+.rte-flex-columns__content {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+.rte-flex-columns__content > [data-node-view-content-vue] {
+	display: contents;
+}
+
+.rte-flex-columns__content .rte-flex-column[data-grow='true'] {
+	flex: 1 1 0;
+	min-width: 0;
+	width: auto;
+}
+
+.rte-flex-columns__content .rte-flex-column[data-grow='false'] {
+	flex: 0 1 auto;
+	width: max-content;
+	max-width: 100%;
+}
+
+.rte-flex-columns__bar {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 8px;
+	border-radius: 6px;
+	background: #f1f5f9;
+	padding: 5px 6px;
+	color: #64748b;
+	font-size: 12px;
+	user-select: none;
+}
+
+.rte-flex-columns__label {
+	font-weight: 600;
+}
+
+.rte-flex-columns__actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-left: auto;
+}
+
+.rte-flex-columns__options {
+	display: inline-flex;
+	gap: 2px;
+	border: 1px solid #cbd5e1;
+	border-radius: 5px;
+	background: #fff;
+	padding: 2px;
+}
+
+.rte-flex-columns__options button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	min-height: 28px;
+	border: 0;
+	border-radius: 3px;
+	background: transparent;
+	padding: 4px 8px;
+	color: #475569;
+	font: inherit;
+	cursor: pointer;
+}
+
+.rte-flex-columns__options button:hover {
+	background: #f1f5f9;
+}
+
+.rte-flex-columns__options button:focus-visible {
+	outline: 2px solid #2563eb;
+	outline-offset: 2px;
+}
+
+.rte-flex-columns__options button.is-active {
+	background: #e2e8f0;
+	color: #0f172a;
+	font-weight: 600;
+}
+
+.rte-flex-columns__delete {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	min-height: 34px;
+	border: 1px solid #fecaca;
+	border-radius: 5px;
+	background: #fff;
+	padding: 4px 8px;
+	color: #b91c1c;
+	font: inherit;
+	cursor: pointer;
+}
+
+.rte-flex-columns__delete:hover {
+	border-color: #fca5a5;
+	background: #fee2e2;
+}
+
+.rte-flex-columns__delete:focus-visible {
+	outline: 2px solid #dc2626;
+	outline-offset: 2px;
+}
+
+.rte-flex-columns__icon {
+	width: 14px;
+	height: 14px;
+}
+
+.rte-flex-columns__hint {
+	color: #94a3b8;
+}
+
+/* 編輯時給空欄位一個可點的最小尺寸：非延展側是 width:max-content，
+   剛插入（空段落）時會塌成一條線，游標點不進去。 */
+.rte-flex-columns:not(.rte-flex-columns--readonly) .rte-flex-column {
+	min-height: 52px;
+	min-width: 8rem;
+	border: 1px solid #e2e8f0;
+	border-radius: 4px;
+	background: #fff;
+	padding: 8px;
+}
+
+@container rte-flex-columns (max-width: 42rem) {
+	.rte-flex-columns__content {
+		flex-direction: column;
+	}
+
+	.rte-flex-columns__content .rte-flex-column {
+		flex: none !important;
+		width: 100% !important;
+		max-width: 100% !important;
 	}
 }

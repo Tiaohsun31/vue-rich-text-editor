@@ -28,7 +28,7 @@
 | 放本套件 | 留給宿主 app |
 | --- | --- |
 | 輸出框架無關、零基礎設施依賴的通用功能 | 假設了特定 CSS 框架（如 Tailwind class 輸出）的節點 |
-| optional extensions（image-upload / lightbox / image-lightbox） | 依賴特定儲存 / 媒體 API（如檔案上傳實作、媒體庫 picker） |
+| optional extensions（image-upload / lightbox / image-lightbox / grid / flex-columns） | 依賴特定儲存 / 媒體 API（如檔案上傳實作、媒體庫 picker） |
 | 只定義介面（handler / configure），不含實作 | 上述介面的實際實作 |
 
 判斷法：**只要假設了宿主的技術棧或基礎設施，就不放本套件——改成一個 configure/handler 介面，讓宿主注入。**
@@ -40,7 +40,7 @@ src/
   components/   RichTextEditor.vue（主入口）、EditorToolbar.vue、RteDialog.vue
   menus/        TextBubbleMenu / TableBubbleMenu / ImageBubbleMenu / YoutubeBubbleMenu / LinkBubbleMenu
   presets/      createDefaultExtensions.ts（預設 extension 組合）
-  extensions/   optional（subpath export）：image-upload / lightbox / image-lightbox
+  extensions/   optional（subpath export）：image-upload / lightbox / image-lightbox / grid / flex-columns
   nodes/        ResizableImage、ResizableYoutube（縮放 + 對齊 NodeView）
   toolbar/      types.ts（ToolbarItem）、defaultToolbarItems.ts
   dialog/       dialog.ts（createRteDialog / promptWithFallback，取代 window.prompt/alert）
@@ -60,13 +60,13 @@ src/
 - 型別：`RichTextEditorOptions`、`RichTextEditorContext`、`ImageUploadHandler`、`EditorContent`
 - Icons：`export * from './icons'`
 
-Optional extensions 走 subpath：`@tiaohsun/vue-rich-text-editor/extensions/{image-upload|lightbox|image-lightbox}`、樣式走 `/styles`。
+Optional extensions 走 subpath：`@tiaohsun/vue-rich-text-editor/extensions/{image-upload|lightbox|image-lightbox|grid|flex-columns}`、樣式走 `/styles`。
 
 ## 核心設計要點
 
 ### `RichTextEditor.vue` props
 
-`modelValue`（v-model）、`extensions`（追加）、`resolveExtensions`（完全接管預設組合）、`toolbarItems`、`placeholder`、`readonly`、`outputFormat: 'html'（預設）| 'json'`、`locale`（預設 `zh-TW`）、`messages`（覆寫個別文案）。
+`modelValue`（v-model）、`extensions`（追加）、`resolveExtensions`（完全接管預設組合）、`toolbarItems`、`placeholder`、`readonly`、`stickyToolbar`（預設 `true`）、`outputFormat: 'html'（預設）| 'json'`、`locale`（預設 `zh-TW`）、`messages`（覆寫個別文案）。
 
 - extensions 組法：`props.resolveExtensions ? resolveExtensions({ extensions: defaultExts }) : [...defaultExts, ...(props.extensions ?? [])]`。
 - `readonly` 時不掛 toolbar / bubble menus / dialog。
@@ -98,6 +98,25 @@ setLink({
 ```
 
 `rel` 不對使用者暴露、也不提供 `nofollow`（對齊 CKEditor `openInNewTab` decorator / TinyMCE）。`mailto:` / `tel:` 不特別處理——Tiptap 預設協定白名單已含,貼上 / 輸入即可用。
+
+### Sticky toolbar
+
+`stickyToolbar` 預設 `true`，由 `EditorToolbar` 掛上 `.rte-toolbar--sticky`（`position: sticky` + `top: var(--rte-toolbar-offset, 0px)` + `z-index: 20`）。
+
+- **`.rte-editor` 必須是 `overflow: clip` 不能是 `hidden`**——`hidden` 會讓它變成 scroll container，sticky 就只黏在編輯器自己身上、對外層捲動容器無效（保留 `overflow: hidden` 在前一行當 Safari < 16 的 fallback）。同理，宿主在捲動容器與編輯器之間放 `overflow: hidden` 也會失效。
+- offset 走 CSS 變數而非 prop，預設 `0`，對齊 CKEditor `ui.viewportOffset.top` 與 TinyMCE `toolbar_sticky_offset`——宿主頂欄高度是宿主的事，不寫進套件。
+- BubbleMenu 的浮層容器（`.rte-bubble-root`，由 fallthrough class 掛在 Floating UI 的根 div 上，執行期被 append 進 `.rte-content`）需 `z-index: 25` 壓過 toolbar，否則貼齊頂端時會被蓋住。
+- **sticky 的 `top` 是相對捲動容器的 content box**（已扣掉 padding），不是可視頂端。宿主捲動容器有 `padding-top` 時，工具列會停在低那麼多的位置，中間那條縫會露出底下捲動的內容。用 `.rte-toolbar--sticky::before`（往上延伸的同色遮罩）補起來——未吸附時它落在 `.rte-editor` 的 `overflow: clip` 範圍外，看不到。**不要求宿主改自己的 padding 結構。**
+
+### 版面節點（grid / flex-columns，optional）
+
+多欄排版**不是** CKEditor 5 / TinyMCE 的核心功能（兩者都得裝外掛），因此走 optional subpath、不進 `createDefaultExtensions`。
+
+- 節點名一律加 `rte` 前綴：`rteGrid`/`rteGridCell`、`rteFlexColumns`/`rteFlexColumn`，HTML 標記為 `data-type="rte-grid"` / `data-type="rte-flex-columns"`。**Tiptap 對重複 extension 名稱只 `console.warn`，然後讓陣列後者靜默覆蓋前者**——通用名（`gridItem`、`flexItem`）撞到宿主自訂節點極難查，所以一律前綴。同理，匯出的子節點 class 也是 `rte-grid-cell` / `rte-flex-column`，不用通用的 `grid-item` / `flex-item`。**節點名存在 Tiptap JSON 裡，之後再改要配資料 migration。**
+- **匯出 HTML 自帶 inline style**（grid 用 `auto-fit minmax`、flex 用 `flex-wrap` + item `min-width`），前台不需要載任何 CSS；編輯與唯讀預覽才走 NodeView + `editor.css`。
+- 編輯畫面的 flex 換行用 `@container`，**匯出端刻意改用 `flex-wrap` + `min-width`**（匯出不需要 container query 支援）。兩條路徑機制不同是刻意的，別「順手統一」。
+- `insertGrid` / `insertFlexColumns` 只種空段落，不塞任何預設文案——避免把語系假設寫進節點。
+- NodeView 的 `editable` 一律用 `ref` + `editor.on('update')`，不要用 `computed`（見「影片行為」最後一條）。
 
 ### 影片行為（YouTube）
 

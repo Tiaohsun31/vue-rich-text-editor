@@ -1,6 +1,6 @@
 {
   "name": "@tiaohsun/vue-rich-text-editor",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A thin, batteries-included Vue 3 wrapper around Tiptap v3 — editor component, toolbar, bubble menus, i18n, HTML/JSON output.",
   "type": "module",
   "license": "MIT",
@@ -45,6 +45,14 @@
       "types": "./src/extensions/image-lightbox/index.ts",
       "default": "./src/extensions/image-lightbox/index.ts"
     },
+    "./extensions/grid": {
+      "types": "./src/extensions/grid/index.ts",
+      "default": "./src/extensions/grid/index.ts"
+    },
+    "./extensions/flex-columns": {
+      "types": "./src/extensions/flex-columns/index.ts",
+      "default": "./src/extensions/flex-columns/index.ts"
+    },
     "./styles": {
       "types": "./src/styles/index.d.ts",
       "default": "./src/styles/editor.css"
@@ -85,6 +93,14 @@
       "./extensions/image-lightbox": {
         "types": "./dist/extensions/image-lightbox/index.d.ts",
         "default": "./dist/extensions/image-lightbox/index.js"
+      },
+      "./extensions/grid": {
+        "types": "./dist/extensions/grid/index.d.ts",
+        "default": "./dist/extensions/grid/index.js"
+      },
+      "./extensions/flex-columns": {
+        "types": "./dist/extensions/flex-columns/index.d.ts",
+        "default": "./dist/extensions/flex-columns/index.js"
       },
       "./styles": {
         "types": "./dist/styles/index.d.ts",

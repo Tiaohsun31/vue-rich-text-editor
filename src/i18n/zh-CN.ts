@@ -82,4 +82,22 @@ export const zhCN: RteMessages = {
 	editLightbox: '编辑灯箱',
 	removeLightbox: '移除灯箱',
 	lightboxNotSet: '（未设置图片）',
+
+	gridLabel: '响应式网格',
+	gridDesktop: '桌面',
+	gridMobile: '手机',
+	gridDecreaseColumns: '减少列数',
+	gridIncreaseColumns: '增加列数',
+	gridAddCell: '新增栏位',
+	gridAddCellShort: '栏位',
+	gridDelete: '删除整个响应式网格',
+	gridDeleteShort: '删除',
+
+	flexLabel: '弹性双栏',
+	flexHint: '窄版自动上下排列',
+	flexGrowLeft: '左侧延展',
+	flexGrowRight: '右侧延展',
+	flexGrowSideGroup: '选择延展栏位',
+	flexDelete: '删除整个弹性双栏',
+	flexDeleteShort: '删除',
 }

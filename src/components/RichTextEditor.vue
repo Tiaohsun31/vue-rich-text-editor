@@ -27,12 +27,14 @@ const props = withDefaults(
 		readonly?: boolean
 		/** 'html'（預設）emit HTML 字串；'json' emit Tiptap JSONContent 物件 */
 		outputFormat?: 'html' | 'json'
+		/** 工具列釘在捲動容器頂端（預設開啟）；宿主有固定頂欄時覆寫 CSS 變數 --rte-toolbar-offset */
+		stickyToolbar?: boolean
 		/** UI 語系（預設 zh-TW） */
 		locale?: RteLocale
 		/** 覆寫個別文案 */
 		messages?: Partial<RteMessages>
 	}>(),
-	{ outputFormat: 'html', locale: 'zh-TW' },
+	{ outputFormat: 'html', locale: 'zh-TW', stickyToolbar: true },
 )
 
 const emit = defineEmits<{
@@ -97,7 +99,7 @@ onBeforeUnmount(() => {
 			<ImageBubbleMenu :editor="editor" />
 			<YoutubeBubbleMenu :editor="editor" />
 			<LinkBubbleMenu :editor="editor" />
-			<EditorToolbar :editor="editor" :items="toolbarItems" />
+			<EditorToolbar :editor="editor" :items="toolbarItems" :sticky="stickyToolbar" />
 		</template>
 		<EditorContent :editor="editor" class="rte-content" />
 		<RteDialog v-if="!readonly" :service="dialog" />

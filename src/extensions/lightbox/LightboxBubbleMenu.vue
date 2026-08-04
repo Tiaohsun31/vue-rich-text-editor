@@ -37,7 +37,7 @@ function removeLightbox() {
 </script>
 
 <template>
-	<BubbleMenu :editor="editor" plugin-key="lightboxBubbleMenu" :should-show="shouldShow" :options="{ placement: 'bottom' }">
+	<BubbleMenu class="rte-bubble-root" :editor="editor" plugin-key="lightboxBubbleMenu" :should-show="shouldShow" :options="{ placement: 'bottom' }">
 		<div class="rte-bubble-menu rte-bubble-menu--link">
 			<span class="rte-bubble-link-href" :title="src">🔍 {{ src || t.lightboxNotSet }}</span>
 			<div class="rte-bubble-separator" />

@@ -18,6 +18,8 @@ export default defineConfig({
         'extensions/image-upload/index': r('src/extensions/image-upload/index.ts'),
         'extensions/lightbox/index': r('src/extensions/lightbox/index.ts'),
         'extensions/image-lightbox/index': r('src/extensions/image-lightbox/index.ts'),
+        'extensions/grid/index': r('src/extensions/grid/index.ts'),
+        'extensions/flex-columns/index': r('src/extensions/flex-columns/index.ts'),
       },
       formats: ['es'],
     },

@@ -82,4 +82,22 @@ export const en: RteMessages = {
 	editLightbox: 'Edit lightbox',
 	removeLightbox: 'Remove lightbox',
 	lightboxNotSet: '(no image set)',
+
+	gridLabel: 'Responsive grid',
+	gridDesktop: 'Desktop',
+	gridMobile: 'Mobile',
+	gridDecreaseColumns: 'Fewer columns',
+	gridIncreaseColumns: 'More columns',
+	gridAddCell: 'Add cell',
+	gridAddCellShort: 'Cell',
+	gridDelete: 'Delete the whole grid',
+	gridDeleteShort: 'Delete',
+
+	flexLabel: 'Flexible columns',
+	flexHint: 'Stacks vertically when narrow',
+	flexGrowLeft: 'Grow left',
+	flexGrowRight: 'Grow right',
+	flexGrowSideGroup: 'Choose which column grows',
+	flexDelete: 'Delete the whole layout',
+	flexDeleteShort: 'Delete',
 }

@@ -88,4 +88,24 @@ export interface RteMessages {
 	editLightbox: string
 	removeLightbox: string
 	lightboxNotSet: string
+
+	// custom grid（optional extension）
+	gridLabel: string
+	gridDesktop: string
+	gridMobile: string
+	gridDecreaseColumns: string
+	gridIncreaseColumns: string
+	gridAddCell: string
+	gridAddCellShort: string
+	gridDelete: string
+	gridDeleteShort: string
+
+	// flex layout（optional extension）
+	flexLabel: string
+	flexHint: string
+	flexGrowLeft: string
+	flexGrowRight: string
+	flexGrowSideGroup: string
+	flexDelete: string
+	flexDeleteShort: string
 }

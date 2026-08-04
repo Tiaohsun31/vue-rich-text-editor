@@ -155,3 +155,13 @@ export const LightboxIcon = svgIcon(
 		'<path d="M3 8V3h5"/>' +
 		'<path d="M9 9 3 3"/>',
 )
+
+export const ArrowLeftIcon = svgIcon('<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>')
+
+export const ArrowRightIcon = svgIcon('<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>')
+
+export const PlusIcon = svgIcon('<path d="M5 12h14"/><path d="M12 5v14"/>')
+
+export const MinusIcon = svgIcon('<path d="M5 12h14"/>')
+
+export const ColumnsIcon = svgIcon('<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/>')

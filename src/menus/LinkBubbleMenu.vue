@@ -51,7 +51,7 @@ function openLink() {
 </script>
 
 <template>
-	<BubbleMenu :editor="editor" plugin-key="linkBubbleMenu" :should-show="shouldShow" :options="{ placement: 'bottom' }">
+	<BubbleMenu class="rte-bubble-root" :editor="editor" plugin-key="linkBubbleMenu" :should-show="shouldShow" :options="{ placement: 'bottom' }">
 		<div class="rte-bubble-menu rte-bubble-menu--link">
 			<span class="rte-bubble-link-href" :title="href">{{ href }}</span>
 			<div class="rte-bubble-separator" />

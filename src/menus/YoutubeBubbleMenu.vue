@@ -39,7 +39,7 @@ function editUrl() {
 </script>
 
 <template>
-	<BubbleMenu :editor="editor" plugin-key="youtubeBubbleMenu" :should-show="shouldShow" :options="{ placement: 'top' }">
+	<BubbleMenu class="rte-bubble-root" :editor="editor" plugin-key="youtubeBubbleMenu" :should-show="shouldShow" :options="{ placement: 'top' }">
 		<div class="rte-bubble-menu">
 			<button
 				type="button"
